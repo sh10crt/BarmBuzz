@@ -43,16 +43,21 @@ This is not just a rule - this is professional survival.
         @{
             NodeName   = 'localhost'
             Role       = 'DC'
-            DomainName = 'bolton.barmbuzz.test'
+            DomainName = 'barmbuzz.local'
             
+           ComputerName = 'BB-DC01'
+           TimeZone = 'GMT Standard Time'
+           EnsureW32Time = $true
+
+        
             # Network Configuration (Dual NIC setup for DC)
-            InterfaceAlias_Internal = 'Ethernet'
-            InterfaceAlias_NAT = 'Ethernet 2'
-            IPv4Address_Internal = '192.168.99.10'
-            PrefixLength_Internal = 24
-            DnsServers_Internal = @('127.0.0.1')
-            Expect_NAT_Dhcp = $true
-            DisableDnsRegistrationOnNat = $true
+            #InterfaceAlias_Internal = 'Ethernet'
+            #InterfaceAlias_NAT = 'Ethernet 2'
+            #IPv4Address_Internal = '192.168.99.10'
+            #PrefixLength_Internal = 24
+            #DnsServers_Internal = @('127.0.0.1')
+           # Expect_NAT_Dhcp = $true
+           # DisableDnsRegistrationOnNat = $true
             
             # AD DS Features
             InstallADDSRole = $true

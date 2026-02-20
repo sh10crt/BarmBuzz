@@ -1,0 +1,83 @@
+**********************
+PowerShell transcript start
+Start time: 20260218170615
+Username: WINDOWS11\Siku
+RunAs User: WINDOWS11\Siku
+Configuration Name: 
+Machine: WINDOWS11 (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -WorkingDirectory ~
+Process ID: 10728
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+[+] Transcript started: Evidence\\Transcripts\\20260218_170615_Run_BuildMain.txt
+[+] Admin privileges confirmed.
+
+[Phase 1] Prerequisites...
+[*] Invoke-BarmBuzz-OneShots: LCM then Network
+--- [STAFF-ONLY] Configuring Persistent LCM Settings ---
+[*] Applying persistent automation settings...
+ConnectionError: The client cannot connect to the destination specified in the request. Verify that the service on the destination is running and is accepting requests. Consult the logs and documentation for the WS-Management service running on the destination, most commonly IIS or WinRM. If the destination is the WinRM service, run the following command on the destination to analyze and configure the WinRM service: "winrm quickconfig".
+ConnectionError: The client cannot connect to the destination specified in the request. Verify that the service on the destination is running and is accepting requests. Consult the logs and documentation for the WS-Management service running on the destination, most commonly IIS or WinRM. If the destination is the WinRM service, run the following command on the destination to analyze and configure the WinRM service: "winrm quickconfig".
+[+] LCM configured. Server is now reboot-ready.
+[*] Ensuring DSC modules are installed/pinned (PSResourceGet) ...
+    -> PSDesiredStateConfiguration@2.0.7 already present (skipping).
+    -> ActiveDirectoryDsc@6.6.0 already present (skipping).
+    -> GroupPolicyDsc@1.0.3 already present (skipping).
+    -> Pester@5.7.1 already present (skipping).
+[+] DSC module baseline ensured at C:\\Program Files\\WindowsPowerShell\\Modules.
+--- BarmBuzz Network, PSRemoting & RSAT Prep ---
+[*] Checking Network Connection Profiles (all connected NICs)...
+    Changing 'Network' (Idx 2) from Public -> Private
+
+[*] Configuring Windows Remote Management (WinRM)...
+WARNING: PowerShell remoting has been enabled only for PowerShell 6+ configurations and does not affect Windows PowerShell remoting configurations. Run this cmdlet in Windows PowerShell to affect all PowerShell remoting configurations.
+WinRM has been updated to receive requests.
+WinRM service type changed successfully. 
+WinRM service started.
+WinRM has been updated for remote management.
+WinRM firewall exception enabled. 
+Configured LocalAccountTokenFilterPolicy to grant administrative rights remotely to local users.
+
+[*] Verifying Connectivity...
+    [+] WinRM is responding! (Protocol Version: OS: 0.0.0 SP: 0.0 Stack: 3.0)
+    [+] Ready for Orchestration.
+
+[*] Ensuring RSAT tools (AD + GPO) are installed...
+    [+] RSAT (client) processed.
+[+] Network/Remoting/RSAT baseline complete.
+[*] LCM already configured (skipping).
+[*] Network already configured (skipping).
+[+] Phase 1 complete.
+
+[Phase 2] Compile + Apply DSC...
+[+] Found configuration: StudentBaseline
+[*] Compiling -> DSC\\Outputs\\StudentBaseline
+
+    Directory: C:\Dev\repos\COM5411_PreDC-Promo\DSC\Outputs\StudentBaseline
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           2/18/2026  5:09 PM           1565 localhost.mof
+[+] Compilation complete.
+[*] Applying configuration (waits until complete)...
+[+] Apply complete.
+
+[Phase 3] Validation...
+[*] Pester validation will be added later.
+
+[+] BUILD SUCCESS
+[*] Next steps (commit outputs + evidence):
+    git add DSC\Outputs Evidence
+    git commit -m \ Build 20260218_170615\
+**********************
+PowerShell transcript end
+End time: 20260218170940
+**********************
