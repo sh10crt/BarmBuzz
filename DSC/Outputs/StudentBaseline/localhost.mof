@@ -1,35 +1,65 @@
 /*
 @TargetNode='localhost'
 @GeneratedBy=Siku
-@GenerationDate=02/18/2026 17:09:39
+@GenerationDate=02/20/2026 15:20:23
 @GenerationHost=WINDOWS11
 */
 
-instance of MSFT_FileDirectoryConfiguration as $MSFT_FileDirectoryConfiguration1ref
+instance of DSC_Computer as $DSC_Computer1ref
 {
-ResourceID = "[File]TestFolder";
- Type = "Directory";
- SourceInfo = "C:\\Dev\\repos\\COM5411_PreDC-Promo\\DSC\\Configurations\\StudentConfig.ps1::55::9::File";
- DestinationPath = "C:\\TEST";
- ModuleName = "PSDesiredStateConfiguration";
- Ensure = "Present";
+SourceInfo = "C:\\Dev\\repos\\COM5411_PreDC-Promo\\DSC\\Configurations\\StudentConfig.ps1::54::9::Computer";
+ ResourceID = "[Computer]SetName";
+ Name = "BB-DC01";
+ ModuleVersion = "10.0.0";
+ ModuleName = "ComputerManagementDsc";
+ ConfigurationName = "StudentBaseline";
+};
+instance of DSC_TimeZone as $DSC_TimeZone1ref
+{
+ModuleVersion = "10.0.0";
+ TimeZone = "GMT Standard Time";
+ ModuleName = "ComputerManagementDsc";
+ IsSingleInstance = "Yes";
+ ResourceID = "[TimeZone]SetTimeZone";
+ SourceInfo = "C:\\Dev\\repos\\COM5411_PreDC-Promo\\DSC\\Configurations\\StudentConfig.ps1::57::9::TimeZone";
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_ServiceResource as $MSFT_ServiceResource1ref
+{
+StartupType = "Automatic";
+ State = "Running";
+ ModuleName = "PsDesiredStateConfiguration";
+ Name = "W32Time";
+ ResourceID = "[Service]WindowsTime";
+ SourceInfo = "C:\\Dev\\repos\\COM5411_PreDC-Promo\\DSC\\Configurations\\StudentConfig.ps1::62::8::Service";
+
+ModuleVersion = "1.0";
+DependsOn = {
+    "[TimeZone]SetTimeZone"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_RoleResource as $MSFT_RoleResource1ref
+{
+Ensure = "Present";
+ ModuleName = "PsDesiredStateConfiguration";
+ Name = "AD-Domain-Services";
+ ResourceID = "[WindowsFeature]ADDS";
+ SourceInfo = "C:\\Dev\\repos\\COM5411_PreDC-Promo\\DSC\\Configurations\\StudentConfig.ps1::70::9::windowsFeature";
 
 ModuleVersion = "1.0";
  ConfigurationName = "StudentBaseline";
 };
-instance of MSFT_FileDirectoryConfiguration as $MSFT_FileDirectoryConfiguration2ref
+instance of MSFT_RoleResource as $MSFT_RoleResource2ref
 {
-ResourceID = "[File]TestFile";
- Type = "File";
- Contents = "Proof-of-life: DSC created this file.";
- SourceInfo = "C:\\Dev\\repos\\COM5411_PreDC-Promo\\DSC\\Configurations\\StudentConfig.ps1::62::9::File";
- DestinationPath = "C:\\TEST\\test.txt";
- ModuleName = "PSDesiredStateConfiguration";
- Ensure = "Present";
+Ensure = "Present";
+ ModuleName = "PsDesiredStateConfiguration";
+ Name = "RSAT-AD-Tools";
+ ResourceID = "[WindowsFeature]RSATADDS";
+ SourceInfo = "C:\\Dev\\repos\\COM5411_PreDC-Promo\\DSC\\Configurations\\StudentConfig.ps1::74::9::windowsFeature";
 
 ModuleVersion = "1.0";
 DependsOn = {
-    "[File]TestFolder"};
+    "[WindowsFeature]ADDS"};
  ConfigurationName = "StudentBaseline";
 };
 instance of OMI_ConfigurationDocument
@@ -43,7 +73,7 @@ instance of OMI_ConfigurationDocument
 
                         Author="Siku";
 
-                        GenerationDate="02/18/2026 17:09:39";
+                        GenerationDate="02/20/2026 15:20:23";
 
                         GenerationHost="WINDOWS11";
 

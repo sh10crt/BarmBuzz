@@ -1,0 +1,57 @@
+**********************
+PowerShell transcript start
+Start time: 20260220151800
+Username: WINDOWS11\Siku
+RunAs User: WINDOWS11\Siku
+Configuration Name: 
+Machine: WINDOWS11 (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -NoProfile -ExecutionPolicy Bypass -Command Import-Module 'c:\Users\Siku\.vscode\extensions\ms-vscode.powershell-2025.4.0\modules\PowerShellEditorServices\PowerShellEditorServices.psd1'; Start-EditorServices -HostName 'Visual Studio Code Host' -HostProfileId 'Microsoft.VSCode' -HostVersion '2025.4.0' -BundledModulesPath 'c:\Users\Siku\.vscode\extensions\ms-vscode.powershell-2025.4.0\modules' -EnableConsoleRepl -StartupBanner "PowerShell Extension v2025.4.0
+Copyright (c) Microsoft Corporation.
+
+https://aka.ms/vscode-powershell
+Type 'help' to get help.
+" -LogLevel 'Warning' -LogPath 'c:\Users\Siku\AppData\Roaming\Code\logs\20260220T151724\window1\exthost\ms-vscode.powershell' -SessionDetailsPath 'c:\Users\Siku\AppData\Roaming\Code\User\globalStorage\ms-vscode.powershell\sessions\PSES-VSCode-2072-732549.json' -FeatureFlags @() 
+Process ID: 9056
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+[+] Transcript started: Evidence\\Transcripts\\20260220_151800_Run_BuildMain.txt
+[+] Admin privileges confirmed.
+
+[Phase 1] Prerequisites...
+[*] Invoke-BarmBuzz-OneShots: LCM then Network
+[*] LCM already configured (flag present).
+[*] Network already configured (flag present).
+[*] LCM already configured (skipping).
+[*] Network already configured (skipping).
+[+] Phase 1 complete.
+
+[Phase 2] Compile + Apply DSC...
+[+] Found configuration: StudentBaseline
+[*] Compiling -> DSC\\Outputs\\StudentBaseline
+
+    Directory:
+C:\Dev\repos\COM5411_PreDC-Promo\DSC\Outputs\StudentBaseline
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           2/20/2026  3:18 PM           2596 localhost.m
+                                                  of
+[+] Compilation complete.
+[*] Applying configuration (waits until complete)...
+PS>TerminatingError(): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: Importing module DSC_Computer failed with error - File C:\Program Files\WindowsPowerShell\Modules\ComputerManagementDsc\10.0.0\DscResources\DSC_Computer\DSC_Computer.psm1 cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170."
+>> TerminatingError(): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: Importing module DSC_Computer failed with error - File C:\Program Files\WindowsPowerShell\Modules\ComputerManagementDsc\10.0.0\DscResources\DSC_Computer\DSC_Computer.psm1 cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170."
+
+[-] BUILD FAILED
+Message: Importing module DSC_Computer failed with error - File C:\Program Files\WindowsPowerShell\Modules\ComputerManagementDsc\10.0.0\DscResources\DSC_Computer\DSC_Computer.psm1 cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+**********************
+PowerShell transcript end
+End time: 20260220151808
+**********************

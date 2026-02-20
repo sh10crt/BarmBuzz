@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="3" errors="0" failures="1" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2026-02-20" time="15:26:42">
+  <environment platform="Microsoft Windows 11 Pro N|C:\WINDOWS|\Device\Harddisk0\Partition4" user-domain="WINDOWS11" os-version="10.0.26200" user="Siku" clr-version="9.0.10" machine-name="WINDOWS11" cwd="C:\Dev\repos\COM5411_PreDC-Promo" nunit-version="2.5.8.0" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Failure" success="False" time="1.6434" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\Dev\repos\COM5411_PreDC-Promo\Tests\pester\Baseline.tests.ps1" executed="True" result="Failure" success="False" time="1.6434" asserts="0" description="C:\Dev\repos\COM5411_PreDC-Promo\Tests\pester\Baseline.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Server Baseline Validation" executed="True" result="Failure" success="False" time="0.7253" asserts="0" description="Server Baseline Validation">
+            <results>
+              <test-case description="Hostname matches declared intent in AllNodes" name="Server Baseline Validation.Hostname matches declared intent in AllNodes" time="0.3878" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>Expected strings to be the same, because The computer name should match your configuration.
+  Expected (from AllNodes.psd1): 'BB-DC01'
+  Actual (from system):          'WINDOWS11'
+HINT: To fix this, use the ComputerManagementDsc module's Computer resource in your StudentConfig.ps1:
+  Computer SetName {
+    Name = $Node.ComputerName
+  }, but they were different.
+Expected length: 7
+Actual length:   9
+Strings differ at index 0.
+Expected: 'BB-DC01'
+But was:  'WINDOWS11'
+           ^</message>
+                  <stack-trace>at $script:ActualName | Should -Be $script:ExpectedName -Because @", C:\Dev\repos\COM5411_PreDC-Promo\Tests\pester\Baseline.tests.ps1:52
+at &lt;ScriptBlock&gt;, C:\Dev\repos\COM5411_PreDC-Promo\Tests\pester\Baseline.tests.ps1:55</stack-trace>
+                </failure>
+              </test-case>
+              <test-case description="Timezone matches declared intent in AllNodes" name="Server Baseline Validation.Timezone matches declared intent in AllNodes" time="0.0309" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="Windows Time service is running" name="Server Baseline Validation.Windows Time service is running" time="0.0313" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
