@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="3" errors="0" failures="2" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2026-02-20" time="07:54:07">
+  <environment platform="Microsoft Windows Server 2025 Datacenter|C:\WINDOWS|\Device\Harddisk0\Partition2" cwd="C:\Dev\repos\BarmBuzz" os-version="10.0.26100" machine-name="BARM-DC-01" clr-version="9.0.10" user-domain="BARM-DC-01" nunit-version="2.5.8.0" user="Administrator" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Failure" success="False" time="1.1995" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\Dev\repos\BarmBuzz\tests\pester\baseline.tests.ps1" executed="True" result="Failure" success="False" time="1.1995" asserts="0" description="C:\Dev\repos\BarmBuzz\tests\pester\baseline.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Server Baseline Validation" executed="True" result="Failure" success="False" time="0.7904" asserts="0" description="Server Baseline Validation">
+            <results>
+              <test-case description="Hostname matches declared intent in AllNodes" name="Server Baseline Validation.Hostname matches declared intent in AllNodes" time="0.5491" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>Expected strings to be the same, because The computer name should match your configuration.
+  Expected (from AllNodes.psd1): 'BB-DC01'
+  Actual (from system):          'BARM-DC-01'
+HINT: To fix this, use the ComputerManagementDsc module's Computer resource in your StudentConfig.ps1:
+  Computer SetName {
+    Name = $Node.ComputerName
+  }, but they were different.
+Expected length: 7
+Actual length:   10
+Strings differ at index 1.
+Expected: 'BB-DC01'
+But was:  'BARM-DC-01'
+           -^</message>
+                  <stack-trace>at $script:ActualName | Should -Be $script:ExpectedName -Because @", C:\Dev\repos\BarmBuzz\tests\pester\baseline.tests.ps1:52
+at &lt;ScriptBlock&gt;, C:\Dev\repos\BarmBuzz\tests\pester\baseline.tests.ps1:55</stack-trace>
+                </failure>
+              </test-case>
+              <test-case description="Timezone matches declared intent in AllNodes" name="Server Baseline Validation.Timezone matches declared intent in AllNodes" time="0.0535" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>Expected strings to be the same, because The timezone should match your configuration.
+  Expected (from AllNodes.psd1): 'GMT Standard Time'
+  Actual (from system):          'Pacific Standard Time'
+HINT: To fix this, use the ComputerManagementDsc module's TimeZone resource in your StudentConfig.ps1:
+  TimeZone SetTimeZone {
+    IsSingleInstance = 'Yes'
+    TimeZone = $Node.TimeZone
+  }
+Common UK timezones:
+  - 'GMT Standard Time' (London, no DST)
+  - 'UTC' (Coordinated Universal Time), but they were different.
+Expected length: 17
+Actual length:   21
+Strings differ at index 0.
+Expected: 'GMT Standard Time'
+But was:  'Pacific Standard Time'
+           ^</message>
+                  <stack-trace>at $script:ActualTZ | Should -Be $script:ExpectedTZ -Because @", C:\Dev\repos\BarmBuzz\tests\pester\baseline.tests.ps1:65
+at &lt;ScriptBlock&gt;, C:\Dev\repos\BarmBuzz\tests\pester\baseline.tests.ps1:68</stack-trace>
+                </failure>
+              </test-case>
+              <test-case description="Windows Time service is running" name="Server Baseline Validation.Windows Time service is running" time="0.0459" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

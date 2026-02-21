@@ -43,11 +43,32 @@ This is not just a rule - this is professional survival.
         @{
             NodeName   = 'localhost'
             Role       = 'DC'
-            DomainName = 'barmbuzz.local'
+            #AD Setting
+            DomainName = 'barmbuzz.corp'
+            DomainNetBIOSName = 'BARMBUZZ'
+            ForestMode = 'WinThreshold'
+            DomainMode = 'WinThreshold'
+            
+            # Computer Setting 
+
             
            ComputerName = 'BB-DC01'
            TimeZone = 'GMT Standard Time'
            EnsureW32Time = $true
+
+           #Network Settings -Internal NIC
+           InterfaceAlias_Internal = 'Ethernet 2'
+           IPv4Address_Internal = '192.168.1.10/24'
+           DefaultGateway_Internal = $null
+           DNSServers_Internal = '127.0.0.1'
+           #Network Settings - External NIC
+           InterfaceAlias_NAT = 'Ethernet'
+           DisableDnsRegistrationOnNat = $true
+
+           Install_ADDS = $true
+           InstallRSAT = $true 
+
+
 
         
             # Network Configuration (Dual NIC setup for DC)

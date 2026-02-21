@@ -42,12 +42,24 @@ This is not paranoia - this is professional discipline.
 #>
 
 Configuration StudentBaseline {
-    param()
+    param(
+        #the username in the  crediential should be just "Administrator"
+        [Parameter(Mandatory = $true)]
+        [PSCredential]
+        $DomainAdminCredential,
+     #can be same as Domain Admin credential, or different for extra security
+        [Parameter(Mandatory = $true)]
+        [PSCredential]
+        $DsrmCredential
+    )
 
     Import-DscResource -ModuleName PSDesiredStateConfiguration
     Import-DscResource -ModuleName ComputerManagementDSC
-    #Import-DscResource -ModuleName ActivedirectoryDSC
+    Import-DscResource -ModuleName ActivedirectoryDSC
+    Import-DscResource -ModuleName NetworkingDSC 
 
+    #Import-DscResource -ModuleName ActivedirectoryDSC
+    
 
     Node $AllNodes.NodeName {
 
