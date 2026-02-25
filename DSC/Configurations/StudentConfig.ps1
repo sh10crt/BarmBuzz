@@ -47,7 +47,7 @@ Configuration StudentBaseline {
         [Parameter(Mandatory = $true)]
         [PSCredential]
         $DomainAdminCredential,
-     #can be same as Domain Admin credential, or different for extra security
+     #Can be same as Domain Admin credential, or different for extra security
         [Parameter(Mandatory = $true)]
         [PSCredential]
         $DsrmCredential
@@ -57,13 +57,12 @@ Configuration StudentBaseline {
     Import-DscResource -ModuleName ComputerManagementDSC
     Import-DscResource -ModuleName ActivedirectoryDSC
     Import-DscResource -ModuleName NetworkingDSC 
-
     #Import-DscResource -ModuleName ActivedirectoryDSC
     
 
     Node $AllNodes.NodeName {
 
-        Computer SetName {
+        Computer SetComputerName {
             Name = $AllNodes.ComputerName
         }
         TimeZone SetTimeZone {
@@ -133,7 +132,7 @@ Configuration StudentBaseline {
 
             ForestMode = $Node.ForestMode
             DomainMode = $Node.DomainMode
-            DependsOn  = '[WindowsFeature]InstallRSAT'
+            DependsOn  = '[WindowsFeature]RSATADDS'
 
 
         }

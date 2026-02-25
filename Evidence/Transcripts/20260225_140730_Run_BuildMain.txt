@@ -1,0 +1,56 @@
+**********************
+PowerShell transcript start
+Start time: 20260225140730
+Username: BB-DC01\Administrator
+RunAs User: BB-DC01\Administrator
+Configuration Name: 
+Machine: BB-DC01 (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -WorkingDirectory ~
+Process ID: 6888
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+[+] Transcript started: Evidence\\Transcripts\\20260225_140730_Run_BuildMain.txt
+[+] Admin privileges confirmed.
+
+[Phase 1] Prerequisites...
+[*] Invoke-BarmBuzz-OneShots: LCM then Network
+[*] LCM already configured (flag present).
+[*] Network already configured (flag present).
+[*] LCM already configured (skipping).
+[*] Network already configured (skipping).
+[+] Phase 1 complete.
+
+[Phase 2] Compile + Apply DSC...
+
+[-] BUILD FAILED
+Message: At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:59 char:5
++     Import-DscResource -ModuleName NetworkingDSC
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Multiple versions of the module 'NetworkingDSC' were found. You can run 'Get-Module -ListAvailable -FullyQualifiedName NetworkingDSC' to see available versions on the system, and then use the fully qualified name '@{ModuleName="NetworkingDSC"; RequiredVersion="Version"}'.
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:83 char:9
++         NetIPAddress SetInternalIP
++         ~~~~~~~~~~~~
+Undefined DSC resource 'NetIPAddress'. Use Import-DSCResource to import the resource.
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:92 char:9
++         DnsServerAddress SetInternalDNS
++         ~~~~~~~~~~~~~~~~
+Undefined DSC resource 'DnsServerAddress'. Use Import-DSCResource to import the resource.
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:102 char:9
++         DnsConnectionSuffix DisableNatDnsRegistration
++         ~~~~~~~~~~~~~~~~~~~
+Undefined DSC resource 'DnsConnectionSuffix'. Use Import-DSCResource to import the resource.
+**********************
+PowerShell transcript end
+End time: 20260225140730
+**********************
