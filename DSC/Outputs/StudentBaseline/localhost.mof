@@ -1,37 +1,37 @@
 /*
 @TargetNode='localhost'
 @GeneratedBy=Administrator
-@GenerationDate=02/20/2026 07:54:24
-@GenerationHost=BARM-DC-01
+@GenerationDate=02/21/2026 02:38:06
+@GenerationHost=BB-DC01
 */
 
 instance of DSC_Computer as $DSC_Computer1ref
 {
-ModuleName = "ComputerManagementDsc";
+ModuleVersion = "10.0.0";
  ResourceID = "[Computer]SetName";
- ModuleVersion = "10.0.0";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::54::9::Computer";
- Name = "BB-DC01";
+ Name = "BB-DC01";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::66::9::Computer";
+ ModuleName = "ComputerManagementDsc";
  ConfigurationName = "StudentBaseline";
 };
 instance of DSC_TimeZone as $DSC_TimeZone1ref
 {
-ResourceID = "[TimeZone]SetTimeZone";
- IsSingleInstance = "Yes";
+IsSingleInstance = "Yes";
  ModuleVersion = "10.0.0";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::57::9::TimeZone";
- TimeZone = "GMT Standard Time";
- ModuleName = "ComputerManagementDsc";
+ ResourceID = "[TimeZone]SetTimeZone";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::69::9::TimeZone";
+ ModuleName = "ComputerManagementDsc";
+ TimeZone = "GMT Standard Time";
  ConfigurationName = "StudentBaseline";
 };
 instance of MSFT_ServiceResource as $MSFT_ServiceResource1ref
 {
 ResourceID = "[Service]WindowsTime";
+ StartupType = "Automatic";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::74::8::Service";
+ ModuleName = "PsDesiredStateConfiguration";
  State = "Running";
  Name = "W32Time";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::62::8::Service";
- ModuleName = "PsDesiredStateConfiguration";
- StartupType = "Automatic";
 
 ModuleVersion = "1.0";
 DependsOn = {
@@ -40,22 +40,22 @@ DependsOn = {
 };
 instance of MSFT_RoleResource as $MSFT_RoleResource1ref
 {
-Ensure = "Present";
- ResourceID = "[WindowsFeature]ADDS";
- Name = "AD-Domain-Services";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::70::9::windowsFeature";
+ResourceID = "[WindowsFeature]ADDS";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::82::9::windowsFeature";
  ModuleName = "PsDesiredStateConfiguration";
+ Ensure = "Present";
+ Name = "AD-Domain-Services";
 
 ModuleVersion = "1.0";
  ConfigurationName = "StudentBaseline";
 };
 instance of MSFT_RoleResource as $MSFT_RoleResource2ref
 {
-Ensure = "Present";
- ResourceID = "[WindowsFeature]RSATADDS";
- Name = "RSAT-AD-Tools";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::74::9::windowsFeature";
+ResourceID = "[WindowsFeature]RSATADDS";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::86::9::windowsFeature";
  ModuleName = "PsDesiredStateConfiguration";
+ Ensure = "Present";
+ Name = "RSAT-AD-Tools";
 
 ModuleVersion = "1.0";
 DependsOn = {
@@ -73,9 +73,9 @@ instance of OMI_ConfigurationDocument
 
                         Author="Administrator";
 
-                        GenerationDate="02/20/2026 07:54:24";
+                        GenerationDate="02/21/2026 02:38:06";
 
-                        GenerationHost="BARM-DC-01";
+                        GenerationHost="BB-DC01";
 
                         Name="StudentBaseline";
 

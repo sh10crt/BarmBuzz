@@ -79,6 +79,40 @@ Configuration StudentBaseline {
 
             
         }
+        #Network Settings Internal NIC
+        IPAddress SetInternalIP
+        {  #InterfaceAlias : The name of the network adapter
+        InterfaceAlias = $Node.InterfaceAlias_Internal
+        #Addressfamily : IPV4 or IPV6
+        Addressfamily = 'IPv4'
+        IPAddress = $Node.IPv4Address_Internal
+        DependsOn = '[Computer]SetComputerName'
+
+        }
+        DnsServerAddress SetInternalDNS
+        {
+            InterfaceAlias = $Node.InterfaceAlias_Internal
+            Addressfamily  = 'IPv4'
+            #127.0.0.0 loopback
+            Address = $Node.DnsServers_Internal
+            DependsOn = '[IPAddress]SetInternalIP'
+
+        }
+        #Network Settings External- NIC
+        DnsConnectionSuffix DisableNatDnsRegistration
+        {
+            InterfaceAlias = $Node.InterfaceAlias_NAT
+
+            ConnectionSpecificSuffix = ''
+
+            RegisterThisConnectionsAddress = $false
+            DependsOn = '[DnsServerAddress]SetInternalDns'
+        }
+
+        ###Install AD DS and RSAT Tools for domain Controller
+
+
+
         windowsFeature ADDS {
             Name = 'AD-Domain-Services'
             Ensure = 'Present'
@@ -87,6 +121,21 @@ Configuration StudentBaseline {
             Name = 'RSAT-AD-Tools'
             Ensure = 'Present'
             DependsOn = '[WindowsFeature]ADDS'
+        }
+        ##Promote the Domain Controller and  create the new forest and Domain
+        ADDomain CreateForest
+        {
+            DomainName = $Node.DomainName
+            DomainNetBIOSName = $Node.DomainNetBIOSName
+
+            Credential = $DomainAdminCredential
+            SafemodeAdministratorPassword = $DsrmCredential
+
+            ForestMode = $Node.ForestMode
+            DomainMode = $Node.DomainMode
+            DependsOn  = '[WindowsFeature]InstallRSAT'
+
+
         }
 
     }

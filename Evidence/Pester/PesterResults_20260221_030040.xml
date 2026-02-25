@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="12" errors="0" failures="12" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2026-02-21" time="03:00:40">
+  <environment nunit-version="2.5.8.0" cwd="C:\Dev\repos\BarmBuzz" user="Administrator" os-version="10.0.26100" platform="Microsoft Windows Server 2025 Datacenter|C:\WINDOWS|\Device\Harddisk0\Partition2" clr-version="9.0.10" user-domain="BB-DC01" machine-name="BB-DC01" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Failure" success="False" time="0.0901" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\Dev\repos\BarmBuzz\Tests\pester\PreDCPromo.Tests.ps1" executed="True" result="Failure" success="False" time="0.0901" asserts="0" description="C:\Dev\repos\BarmBuzz\Tests\pester\PreDCPromo.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Pre-DC Readiness (Dual NIC) - localhost" executed="True" result="Failure" success="False" time="0.0142" asserts="0" description="Pre-DC Readiness (Dual NIC) - localhost">
+            <results>
+              <test-case description="Internal and NAT adapters exist" name="Pre-DC Readiness (Dual NIC) - localhost.Internal and NAT adapters exist" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="Internal NIC has static IPv4 (Manual prefix origin)" name="Pre-DC Readiness (Dual NIC) - localhost.Internal NIC has static IPv4 (Manual prefix origin)" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="Internal NIC IPv4 address matches AllNodes" name="Pre-DC Readiness (Dual NIC) - localhost.Internal NIC IPv4 address matches AllNodes" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="Internal NIC prefix length matches AllNodes" name="Pre-DC Readiness (Dual NIC) - localhost.Internal NIC prefix length matches AllNodes" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="Internal NIC has NO default gateway (single-gateway rule)" name="Pre-DC Readiness (Dual NIC) - localhost.Internal NIC has NO default gateway (single-gateway rule)" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="NAT NIC has a default gateway" name="Pre-DC Readiness (Dual NIC) - localhost.NAT NIC has a default gateway" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="Internal NIC DNS servers match AllNodes (order-insensitive)" name="Pre-DC Readiness (Dual NIC) - localhost.Internal NIC DNS servers match AllNodes (order-insensitive)" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="NAT NIC does not register in DNS when DisableDnsRegistrationOnNat is true" name="Pre-DC Readiness (Dual NIC) - localhost.NAT NIC does not register in DNS when DisableDnsRegistrationOnNat is true" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="Internal NIC registers in DNS" name="Pre-DC Readiness (Dual NIC) - localhost.Internal NIC registers in DNS" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="NAT NIC is DHCP (when Expect_NAT_Dhcp is true)" name="Pre-DC Readiness (Dual NIC) - localhost.NAT NIC is DHCP (when Expect_NAT_Dhcp is true)" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="AD-Domain-Services is installed when requested" name="Pre-DC Readiness (Dual NIC) - localhost.AD-Domain-Services is installed when requested" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="RSAT-ADDS is installed when requested" name="Pre-DC Readiness (Dual NIC) - localhost.RSAT-ADDS is installed when requested" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

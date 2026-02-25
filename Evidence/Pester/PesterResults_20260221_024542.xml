@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="13" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2026-02-21" time="02:45:42">
+  <environment nunit-version="2.5.8.0" cwd="C:\Dev\repos\BarmBuzz" user="Administrator" os-version="10.0.26100" platform="Microsoft Windows Server 2025 Datacenter|C:\WINDOWS|\Device\Harddisk0\Partition2" clr-version="9.0.10" user-domain="BB-DC01" machine-name="BB-DC01" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="2.4671" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\Dev\repos\BarmBuzz\Tests\pester\Template.Tests.ps1" executed="True" result="Success" success="True" time="2.4671" asserts="0" description="C:\Dev\repos\BarmBuzz\Tests\pester\Template.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="My Feature Tests" executed="True" result="Success" success="True" time="0.1964" asserts="0" description="My Feature Tests">
+            <results>
+              <test-case description="Example test: PowerShell version is 7+" name="My Feature Tests.Example test: PowerShell version is 7+" time="0.0742" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="Example test: Repo root exists" name="My Feature Tests.Example test: Repo root exists" time="0.053" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="Example test: Can load AllNodes.psd1" name="My Feature Tests.Example test: Can load AllNodes.psd1" time="0.0342" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="Dynamic Test Example" executed="True" result="Success" success="True" time="0.3919" asserts="0" description="Dynamic Test Example">
+            <results>
+              <test-suite type="ParameterizedTest" name="Dynamic Test Example.Module '&lt;_&gt;' should be installed" executed="True" result="Success" success="True" time="0.1535" asserts="0" description="Module '&lt;_&gt;' should be installed">
+                <results>
+                  <test-case description="Module 'Pester' should be installed" name="Dynamic Test Example.Module 'Pester' should be installed" time="0.0911" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Module 'ActiveDirectoryDsc' should be installed" name="Dynamic Test Example.Module 'ActiveDirectoryDsc' should be installed" time="0.0333" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Module 'ComputerManagementDsc' should be installed" name="Dynamic Test Example.Module 'ComputerManagementDsc' should be installed" time="0.0292" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="Common Testing Patterns" executed="True" result="Success" success="True" time="2.2253" asserts="0" description="Common Testing Patterns">
+            <results>
+              <test-suite type="TestFixture" name="Common Testing Patterns.File and Directory Tests" executed="True" result="Success" success="True" time="0.0563" asserts="0" description="Common Testing Patterns.File and Directory Tests">
+                <results>
+                  <test-case description="Tests a file exists" name="Common Testing Patterns.File and Directory Tests.Tests a file exists" time="0.0303" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Tests a directory exists" name="Common Testing Patterns.File and Directory Tests.Tests a directory exists" time="0.0232" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="Common Testing Patterns.Service and Process Tests" executed="True" result="Success" success="True" time="0.0912" asserts="0" description="Common Testing Patterns.Service and Process Tests">
+                <results>
+                  <test-case description="Tests a Windows service status" name="Common Testing Patterns.Service and Process Tests.Tests a Windows service status" time="0.0325" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="Common Testing Patterns.Network Tests" executed="True" result="Success" success="True" time="1.7224" asserts="0" description="Common Testing Patterns.Network Tests">
+                <results>
+                  <test-case description="Tests network adapter exists" name="Common Testing Patterns.Network Tests.Tests network adapter exists" time="1.6286" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="Common Testing Patterns.String and Value Tests" executed="True" result="Success" success="True" time="1.8065" asserts="0" description="Common Testing Patterns.String and Value Tests">
+                <results>
+                  <test-case description="Tests exact string match" name="Common Testing Patterns.String and Value Tests.Tests exact string match" time="0.0311" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Tests string contains pattern" name="Common Testing Patterns.String and Value Tests.Tests string contains pattern" time="0.0257" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Tests numeric comparison" name="Common Testing Patterns.String and Value Tests.Tests numeric comparison" time="0.0213" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

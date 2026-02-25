@@ -58,15 +58,21 @@ This is not just a rule - this is professional survival.
 
            #Network Settings -Internal NIC
            InterfaceAlias_Internal = 'Ethernet 2'
-           IPv4Address_Internal = '192.168.1.10/24'
+           IPv4Address_Internal = '192.168.1.10'
+           PreficLength_Internal = 24
            DefaultGateway_Internal = $null
            DNSServers_Internal = '127.0.0.1'
            #Network Settings - External NIC
            InterfaceAlias_NAT = 'Ethernet'
            DisableDnsRegistrationOnNat = $true
 
+         # Install features ADDS and RSAT
+
            Install_ADDS = $true
            InstallRSAT = $true 
+           #Security Settings 
+           PsDscAllowPlainTextPassword = $true
+           PsDscAllowDomainUser = $true
 
 
 

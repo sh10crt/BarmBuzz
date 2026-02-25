@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="3" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2026-02-21" time="02:42:33">
+  <environment nunit-version="2.5.8.0" cwd="C:\Dev\repos\BarmBuzz" user="Administrator" os-version="10.0.26100" platform="Microsoft Windows Server 2025 Datacenter|C:\WINDOWS|\Device\Harddisk0\Partition2" clr-version="9.0.10" user-domain="BB-DC01" machine-name="BB-DC01" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="1.7095" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\Dev\repos\BarmBuzz\Tests\pester\baseline.tests.ps1" executed="True" result="Success" success="True" time="1.7095" asserts="0" description="C:\Dev\repos\BarmBuzz\Tests\pester\baseline.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Server Baseline Validation" executed="True" result="Success" success="True" time="0.5688" asserts="0" description="Server Baseline Validation">
+            <results>
+              <test-case description="Hostname matches declared intent in AllNodes" name="Server Baseline Validation.Hostname matches declared intent in AllNodes" time="0.3247" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="Timezone matches declared intent in AllNodes" name="Server Baseline Validation.Timezone matches declared intent in AllNodes" time="0.0242" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="Windows Time service is running" name="Server Baseline Validation.Windows Time service is running" time="0.0288" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
