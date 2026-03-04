@@ -1,103 +1,113 @@
-<#
-CYBERSECURITY WARNING: NO CREDENTIALS IN THIS FILE
-
-This data file is committed to Git. NEVER put passwords, API keys, or secrets here.
-
-ACCEPTABLE DATA (safe to commit):
-- Domain names, server names, IP addresses
-- Feature lists, role configurations
-- Non-sensitive metadata (OU names, group names)
-- Certificate thumbprints (public info, not the private key!)
-
-NEVER COMMIT:
-- Passwords (plaintext or "obfuscated")
-- Connection strings with embedded credentials
-- API keys, tokens, or access secrets
-- Private keys or PFX files with passwords
-
-WHY THIS MATTERS (Security Mindset):
-1. Git History is Permanent: Even if you delete a secret later, it's in the commit history forever
-2. Public Repos: Students often make repos public for portfolios - instant breach
-3. Credential Scanners: GitHub, GitLab, and Bitbucket scan for secrets automatically
-4. Professional Consequences: Companies fire employees for committing secrets (real incidents)
-
-Real-world example (2021): Uber engineer committed AWS keys to GitHub.
-Cost: $100k AWS bill before discovered, engineer terminated, company fined.
-
-WHAT TO DO INSTEAD:
-- Orchestrator (Run_BuildMain.ps1) handles credential creation securely
-- Credentials passed at runtime, never stored in files
-- Production: Use Azure KeyVault, AWS Secrets Manager, HashiCorp Vault
-- DSC supports certificate encryption for MOF files (we'll cover this later)
-
-IF YOU NEED CREDENTIALS FOR TESTING:
-- See Documentation\README.md for the fixed lab passwords
-- Use them MANUALLY in PowerShell sessions ONLY
-- NEVER put them in code or data files
-
-This is not just a rule - this is professional survival.
-#>
-
 @{
     AllNodes = @(
+        # -----------------------------
+        # Domain Controller Node
+        # -----------------------------
         @{
-            NodeName   = 'localhost'
-            Role       = 'DC'
-            #AD Setting
-            DomainName = 'barmbuzz.corp'
-            DomainNetBIOSName = 'BARMBUZZ'
-            ForestMode = 'WinThreshold'
-            DomainMode = 'WinThreshold'
-            
-            # Computer Setting 
+            NodeName = 'localhost';
+            Role     = 'DC';
 
-            
-           ComputerName = 'BB-DC01'
-           TimeZone = 'GMT Standard Time'
-           EnsureW32Time = $true
+            # AD Settings
+            DomainName        = 'barmbuzz.corp';
+            DomainNetBIOSName = 'BARMBUZZ';
+            ForestMode        = 'WinThreshold';
+            DomainMode        = 'WinThreshold';
+            DomainDN          = 'DC=barmbuzz,DC=corp';
 
-           #Network Settings -Internal NIC
-           InterfaceAlias_Internal = 'Ethernet 2'
-           IPv4Address_Internal = '192.168.1.10'
-           PreficLength_Internal = 24
-           DefaultGateway_Internal = $null
-           DNSServers_Internal = '127.0.0.1'
-           #Network Settings - External NIC
-           InterfaceAlias_NAT = 'Ethernet'
-           DisableDnsRegistrationOnNat = $true
+            # Computer Settings
+            ComputerName = 'BB-DC01';
+            TimeZone     = 'GMT Standard Time';
 
-         # Install features ADDS and RSAT
+            # Networking
+            InterfaceAlias_Internal = 'Ethernet 2';
+            IPv4Address_Internal    = '192.168.1.10/24';
+            DNSServers_Internal     = '127.0.0.1';
+            InterfaceAlias_NAT      = 'Ethernet';
 
-           Install_ADDS = $true
-           InstallRSAT = $true 
-           #Security Settings 
-           PsDscAllowPlainTextPassword = $true
-           PsDscAllowDomainUser = $true
+            PsDscAllowPlainTextPassword = $true;
+            PsDscAllowDomainUser        = $true;
 
+            # Organizational Units
+            OrganizationalUnits = @(
+                @{ Key='BarmBuzz'; Name='BarmBuzz'; ParentPath=''; DependsOnKey=''; Protected=$true; Description='Root OU' };
+                @{ Key='Tier0'; Name='Tier0'; ParentPath='OU=BarmBuzz'; DependsOnKey='BarmBuzz'; Protected=$true; Description='Tier0 OU' };
+                @{ Key='Tier0_Admins'; Name='Admins'; ParentPath='OU=Tier0,OU=BarmBuzz'; DependsOnKey='Tier0'; Protected=$true; Description='Admins OU' };
+                @{ Key='Tier0_Servers'; Name='Servers'; ParentPath='OU=Tier0,OU=BarmBuzz'; DependsOnKey='Tier0'; Protected=$true; Description='Servers OU' };
+                @{ Key='Sites'; Name='Sites'; ParentPath='OU=BarmBuzz'; DependsOnKey='BarmBuzz'; Protected=$true; Description='Sites OU' };
+                @{ Key='Bolton'; Name='Bolton'; ParentPath='OU=Sites,OU=BarmBuzz'; DependsOnKey='Sites'; Protected=$true; Description='Bolton OU' };
+                @{ Key='Bolton_Users'; Name='Users'; ParentPath='OU=Bolton,OU=Sites,OU=BarmBuzz'; DependsOnKey='Bolton'; Protected=$true; Description='Users OU' };
+                @{ Key='Bolton_Computers'; Name='Computers'; ParentPath='OU=Bolton,OU=Sites,OU=BarmBuzz'; DependsOnKey='Bolton'; Protected=$true; Description='Computers OU' };
+                @{ Key='Bolton_Workstations'; Name='Workstations'; ParentPath='OU=Computers,OU=Bolton,OU=Sites,OU=BarmBuzz'; DependsOnKey='Bolton_Computers'; Protected=$true; Description='Workstations OU' };
+                @{ Key='Groups'; Name='Groups'; ParentPath='OU=BarmBuzz'; DependsOnKey='BarmBuzz'; Protected=$true; Description='Groups OU' };
+                @{ Key='Groups_Role'; Name='Role'; ParentPath='OU=Groups,OU=BarmBuzz'; DependsOnKey='Groups'; Protected=$true; Description='Role Groups OU' };
+                @{ Key='Groups_Resource'; Name='Resource'; ParentPath='OU=Groups,OU=BarmBuzz'; DependsOnKey='Groups'; Protected=$true; Description='Resource Groups OU' };
+                @{ Key='Clients'; Name='Clients'; ParentPath='OU=BarmBuzz'; DependsOnKey='BarmBuzz'; Protected=$true; Description='Clients OU' };
+                @{ Key='Clients_Windows'; Name='Windows'; ParentPath='OU=Clients,OU=BarmBuzz'; DependsOnKey='Clients'; Protected=$true; Description='Windows Clients OU' };
+            );
 
+            # Security Groups
+            SecurityGroups = @(
+                @{ Key='GG_Bolton-Baristas'; GroupName='GG_BB_Bolton_Baristas'; GroupScope='Global'; Category='Security'; OUPath='OU=Role,OU=Groups,OU=BarmBuzz'; DependsOnOUKey='Groups_Role'; MembersToInclude=@() };
+                @{ Key='GG_Bolton-Managers'; GroupName='GG_BB_Bolton_Managers'; GroupScope='Global'; Category='Security'; OUPath='OU=Role,OU=Groups,OU=BarmBuzz'; DependsOnOUKey='Groups_Role'; MembersToInclude=@() };
+                @{ Key='GG_Bolton-Helpdesk'; GroupName='GG_BB_IT_Helpdesk'; GroupScope='Global'; Category='Security'; OUPath='OU=Role,OU=Groups,OU=BarmBuzz'; DependsOnOUKey='Groups_Role'; MembersToInclude=@() };
+                @{ Key='DL_POS-LocalAdmins'; GroupName='DL_BB_POS_LocalAdmins'; GroupScope='DomainLocal'; Category='Security'; OUPath='OU=Resource,OU=Groups,OU=BarmBuzz'; DependsOnOUKey='Groups_Resource'; MembersToInclude=@('GG_BB_Bolton_Baristas') };
+            );
 
-        
-            # Network Configuration (Dual NIC setup for DC)
-            #InterfaceAlias_Internal = 'Ethernet'
-            #InterfaceAlias_NAT = 'Ethernet 2'
-            #IPv4Address_Internal = '192.168.99.10'
-            #PrefixLength_Internal = 24
-            #DnsServers_Internal = @('127.0.0.1')
-           # Expect_NAT_Dhcp = $true
-           # DisableDnsRegistrationOnNat = $true
-            
-            # AD DS Features
-            InstallADDSRole = $true
-            InstallRSATADDS = $true
-            
-            # SECURITY NOTE: Future credential properties will be added by the orchestrator
-            # at runtime, not stored here. Example (YOU DON'T ADD THIS YET):
-            # DomainCredential = $PSCredentialObject  # Injected by Run_BuildMain.ps1
-            
-            # CERTIFICATE ENCRYPTION (Production pattern - informational for now):
-            # CertificateFile = 'C:\Certs\DscPublicKey.cer'  # Public key for MOF encryption
-            # Thumbprint = '1234567890ABCDEF...'            # Certificate thumbprint
-            # PsDscAllowPlainTextPassword = $false           # Force encryption (production)
+            # AD Users
+            ADUsers = @(
+                @{
+                    Key='ava_barista';
+                    UserName='ava_barista';
+                    GivenName='Ava';
+                    Surname='Barista';
+                    DisplayName='Ava Barista';
+                    UserPrincipalName='ava.barista@barmbuzz.corp';
+                    OUPath='OU=Users,OU=Bolton,OU=Sites,OU=BarmBuzz';
+                    DependsOnOUKey='Bolton_Users';
+                    GroupMembership=@('GG_BB_Bolton_Baristas');
+                    ChangePasswordAtLogon=$true;
+                    Description='Barista User';
+                }
+            );
+
+            # Password Policy
+            PasswordPolicy = @{
+                ComplexityEnabled=$true;
+                MinPasswordLength=10;
+                PasswordHistoryCount=12;
+                MaxPasswordAge=90;
+                MinPasswordAge=1;
+                LockoutThreshold=5;
+                LockoutDuration=30;
+                LockoutObservationWindow=30;
+                ReversibleEncryptionEnabled=$false;
+            };
+        };
+
+        # -----------------------------
+        # Windows Client Node
+        # -----------------------------
+        @{
+            NodeName='BB-WIN11-01';
+            Role='WINClient';
+
+            ComputerName='BB-WIN11-01';
+            TimeZone='GMT Standard Time';
+            DomainName='barmbuzz.corp';
+            DomainNetBIOSName='BARMBUZZ';
+            DomainDN='DC=barmbuzz,DC=corp';
+
+            PsDscAllowPlainTextPassword=$true;
+            PsDscAllowDomainUser=$true;
+
+            # Add default empty arrays/properties to prevent DSC errors
+            OrganizationalUnits = @();
+            SecurityGroups = @(@{ MembersToInclude=@() });
+            ADUsers = @(@{ Description=$null });
+            InterfaceAlias_Internal = $null;
+            IPv4Address_Internal = $null;
+            DNSServers_Internal = $null;
+            InterfaceAlias_NAT = $null;
         }
-    )
+    );
 }

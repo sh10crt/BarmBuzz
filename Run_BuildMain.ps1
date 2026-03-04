@@ -190,10 +190,14 @@ try {
         Select-Object FullName, Length, LastWriteTime |
         Out-File (Join-Path $EvidenceRoot ("DSC\{0}_compiled_files.txt" -f $RunStamp)) -Encoding UTF8
 
-    Write-Host "[*] Applying configuration (waits until complete)..." -ForegroundColor Gray
-    Start-DscConfiguration -Path $CompileOut -Wait -Force -Verbose 4>&1 |
+   Write-Host "[*] Applying configuration (localhost only)..." -ForegroundColor Gray
+    $LocalOut = Join-Path $CompileOut "localhost"
+    New-FolderIfMissing -Path $LocalOut
+    Copy-Item -Path (Join-Path $CompileOut "localhost.mof") -Destination $LocalOut -Force
+    Start-DscConfiguration -Path $LocalOut -Wait -Force -Verbose 4>&1 |
         Tee-Object -FilePath (Join-Path $EvidenceRoot ("DSC\{0}_apply_verbose.txt" -f $RunStamp))
-    Write-Host "[+] Apply complete." -ForegroundColor Green
+    Write-Host "[+] Apply complete (localhost)." -ForegroundColor Green
+    
 
     # NOTE: '4>&1' redirects verbose stream to success stream so Tee-Object captures it.
     # Read Evidence\DSC\*_apply_verbose.txt to learn what DSC did step-by-step.

@@ -1,0 +1,58 @@
+/*
+@TargetNode='BB-WIN11-01'
+@GeneratedBy=Administrator
+@GenerationDate=03/04/2026 15:13:13
+@GenerationHost=BB-DC01
+*/
+
+instance of DSC_Computer as $DSC_Computer1ref
+{
+ResourceID = "[Computer]SetName";
+ Name = "BB-WIN11-01";
+ ModuleVersion = "10.0.0";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::26::13::Computer";
+ ModuleName = "ComputerManagementDsc";
+ ConfigurationName = "StudentBaseline";
+};
+instance of DSC_TimeZone as $DSC_TimeZone1ref
+{
+ResourceID = "[TimeZone]SetTimeZone";
+ ModuleVersion = "10.0.0";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::30::13::TimeZone";
+ ModuleName = "ComputerManagementDsc";
+ TimeZone = "GMT Standard Time";
+ IsSingleInstance = "Yes";
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_ServiceResource as $MSFT_ServiceResource1ref
+{
+ResourceID = "[Service]WindowsTime";
+ StartupType = "Automatic";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::35::13::Service";
+ Name = "W32Time";
+ ModuleName = "PsDesiredStateConfiguration";
+ State = "Running";
+
+ModuleVersion = "1.0";
+DependsOn = {
+    "[TimeZone]SetTimeZone"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of OMI_ConfigurationDocument
+
+                    {
+ Version="2.0.0";
+
+                        MinimumCompatibleVersion = "1.0.0";
+
+                        CompatibleVersionAdditionalProperties= {"Omi_BaseResource:ConfigurationName"};
+
+                        Author="Administrator";
+
+                        GenerationDate="03/04/2026 15:13:13";
+
+                        GenerationHost="BB-DC01";
+
+                        Name="StudentBaseline";
+
+                    };

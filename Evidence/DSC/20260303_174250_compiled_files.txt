@@ -1,0 +1,6 @@
+
+FullName                                                          Length LastWriteTime
+--------                                                          ------ -------------
+C:\Dev\repos\BarmBuzz\DSC\Outputs\StudentBaseline\BB-WIN11-01.mof   1766 3/3/2026 5:43:27 PM
+C:\Dev\repos\BarmBuzz\DSC\Outputs\StudentBaseline\localhost.mof     3962 3/3/2026 5:43:27 PM
+

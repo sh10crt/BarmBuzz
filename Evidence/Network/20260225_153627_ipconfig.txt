@@ -1,0 +1,49 @@
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : BB-DC01
+   Primary Dns Suffix  . . . . . . . : barmbuzz.corp
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : barmbuzz.corp
+                                       bolton.ac.uk
+
+Ethernet adapter Ethernet:
+
+   Connection-specific DNS Suffix  . : bolton.ac.uk
+   Description . . . . . . . . . . . : Intel(R) PRO/1000 MT Desktop Adapter
+   Physical Address. . . . . . . . . : 08-00-27-9A-23-AB
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IPv6 Address. . . . . . . . . . . : fd00::115d:9644:9db3:649f(Preferred) 
+   Link-local IPv6 Address . . . . . : fe80::bcf1:ba01:9833:7b05%8(Preferred) 
+   IPv4 Address. . . . . . . . . . . : 10.0.2.15(Preferred) 
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Wednesday, February 25, 2026 2:41:26 PM
+   Lease Expires . . . . . . . . . . : Thursday, February 26, 2026 2:41:26 PM
+   Default Gateway . . . . . . . . . : fe80::2%8
+                                       10.0.2.2
+   DHCP Server . . . . . . . . . . . : 10.0.2.2
+   DHCPv6 IAID . . . . . . . . . . . : 101187623
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-31-1E-B5-F7-08-00-27-9A-23-AB
+   DNS Servers . . . . . . . . . . . : ::1
+                                       127.0.0.1
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Ethernet adapter Ethernet 2:
+
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Intel(R) PRO/1000 MT Desktop Adapter #2
+   Physical Address. . . . . . . . . : 08-00-27-25-F9-D1
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::4b7e:6d1c:ce7d:405d%14(Preferred) 
+   IPv4 Address. . . . . . . . . . . : 192.168.1.10(Preferred) 
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.1.1
+   DHCPv6 IAID . . . . . . . . . . . : 168296487
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-31-1E-B5-F7-08-00-27-9A-23-AB
+   DNS Servers . . . . . . . . . . . : ::1
+                                       127.0.0.1
+   NetBIOS over Tcpip. . . . . . . . : Enabled
