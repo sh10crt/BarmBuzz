@@ -1,0 +1,88 @@
+**********************
+PowerShell transcript start
+Start time: 20260305142343
+Username: BARMBUZZ\Administrator
+RunAs User: BARMBUZZ\Administrator
+Configuration Name: 
+Machine: BB-DC01 (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll
+Process ID: 6048
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+[+] Transcript started: Evidence\\Transcripts\\20260305_142343_Run_BuildMain.txt
+[+] Admin privileges confirmed.
+
+[Phase 1] Prerequisites...
+[*] Invoke-BarmBuzz-OneShots: LCM then Network
+[*] LCM already configured (flag present).
+[*] Network already configured (flag present).
+[*] LCM already configured (skipping).
+[*] Network already configured (skipping).
+[+] Phase 1 complete.
+
+[Phase 2] Compile + Apply DSC...
+
+[-] BUILD FAILED
+Message: At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:1 char:448
++ … me PSDesiredStateConfiguration Import-DscResource -ModuleName Compute …
++                                                     ~~~~~~~~~~~
+Cannot bind parameter because parameter 'ModuleName' is specified more than once. To provide multiple values to parameters that can accept multiple values, use the array syntax. For example, "-parameter value1,value2,value3".
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:1 char:429
++ … ce -ModuleName PSDesiredStateConfiguration Import-DscResource -Module …
++                                              ~~~~~~~~~~~~~~~~~~
+Positional parameters are not supported for the Import-DscResource dynamic keyword. The syntax of Import-DscResource dynamic keyword is: "Import-DscResource  [-Name <ResourceName(s)>] [-ModuleName <ModuleName(s)>] [-ModuleVersion <ModuleVersion>]
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:1 char:482
++ … Resource -ModuleName ComputerManagementDSC Import-DscResource -Module …
++                                              ~~~~~~~~~~~~~~~~~~
+Positional parameters are not supported for the Import-DscResource dynamic keyword. The syntax of Import-DscResource dynamic keyword is: "Import-DscResource  [-Name <ResourceName(s)>] [-ModuleName <ModuleName(s)>] [-ModuleVersion <ModuleVersion>]
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:1 char:532
++ … DscResource -ModuleName ActiveDirectoryDsc Import-DscResource -Module …
++                                              ~~~~~~~~~~~~~~~~~~
+Positional parameters are not supported for the Import-DscResource dynamic keyword. The syntax of Import-DscResource dynamic keyword is: "Import-DscResource  [-Name <ResourceName(s)>] [-ModuleName <ModuleName(s)>] [-ModuleVersion <ModuleVersion>]
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:1 char:577
++ … port-DscResource -ModuleName NetworkingDsc Import-DscResource -Module …
++                                              ~~~~~~~~~~~~~~~~~~
+Positional parameters are not supported for the Import-DscResource dynamic keyword. The syntax of Import-DscResource dynamic keyword is: "Import-DscResource  [-Name <ResourceName(s)>] [-ModuleName <ModuleName(s)>] [-ModuleVersion <ModuleVersion>]
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:3 char:2
++ - Define Configuration StudentBaseline
++  ~
+Missing expression after unary operator '-'.
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:3 char:3
++ - Define Configuration StudentBaseline
++   ~~~~~~
+Unexpected token 'Define' in expression or statement.
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:3 char:3
++ - Define Configuration StudentBaseline
++   ~~~~~~
+The 'define' keyword is not supported in this version of the language.
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:4 char:2
++ - Use ConfigurationData (AllNodes.psd1)
++  ~
+Missing '{' in configuration statement.
+
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:5 char:2
++ - DO NOT hardcode passwords here.
++  ~
+Missing expression after unary operator '-'.
+
+Not all parse errors were reported.  Correct the reported errors and try again.
+**********************
+PowerShell transcript end
+End time: 20260305142344
+**********************

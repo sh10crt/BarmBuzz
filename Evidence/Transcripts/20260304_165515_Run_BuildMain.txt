@@ -1,0 +1,41 @@
+**********************
+PowerShell transcript start
+Start time: 20260304165515
+Username: BARMBUZZ\Administrator
+RunAs User: BARMBUZZ\Administrator
+Configuration Name: 
+Machine: BB-DC01 (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll
+Process ID: 6524
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+[+] Transcript started: Evidence\\Transcripts\\20260304_165515_Run_BuildMain.txt
+[+] Admin privileges confirmed.
+
+[Phase 1] Prerequisites...
+[*] Invoke-BarmBuzz-OneShots: LCM then Network
+[*] LCM already configured (flag present).
+[*] Network already configured (flag present).
+[*] LCM already configured (skipping).
+[*] Network already configured (skipping).
+[+] Phase 1 complete.
+
+[Phase 2] Compile + Apply DSC...
+
+[-] BUILD FAILED
+Message: At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:14 char:5
++     Import-DscResource -ModuleName xActiveDirectory
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Multiple versions of the module 'xActiveDirectory' were found. You can run 'Get-Module -ListAvailable -FullyQualifiedName xActiveDirectory' to see available versions on the system, and then use the fully qualified name '@{ModuleName="xActiveDirectory"; RequiredVersion="Version"}'.
+**********************
+PowerShell transcript end
+End time: 20260304165515
+**********************

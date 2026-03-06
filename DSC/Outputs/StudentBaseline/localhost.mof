@@ -1,61 +1,107 @@
 /*
 @TargetNode='localhost'
 @GeneratedBy=Administrator
-@GenerationDate=03/04/2026 15:13:13
+@GenerationDate=03/06/2026 00:05:19
 @GenerationHost=BB-DC01
 */
 
 instance of DSC_Computer as $DSC_Computer1ref
 {
-ResourceID = "[Computer]SetName";
- Name = "localhost";
- ModuleVersion = "10.0.0";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::26::13::Computer";
- ModuleName = "ComputerManagementDsc";
+ModuleName = "ComputerManagementDsc";
+ Name = "BB-DC01";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::42::9::Computer";
+ ResourceID = "[Computer]SetComputerName";
+ ModuleVersion = "10.0.0";
  ConfigurationName = "StudentBaseline";
 };
 instance of DSC_TimeZone as $DSC_TimeZone1ref
 {
 ResourceID = "[TimeZone]SetTimeZone";
- ModuleVersion = "10.0.0";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::30::13::TimeZone";
- ModuleName = "ComputerManagementDsc";
  TimeZone = "GMT Standard Time";
- IsSingleInstance = "Yes";
+ IsSingleInstance = "Yes";
+ ModuleVersion = "10.0.0";
+ ModuleName = "ComputerManagementDsc";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::47::9::TimeZone";
  ConfigurationName = "StudentBaseline";
 };
 instance of MSFT_ServiceResource as $MSFT_ServiceResource1ref
 {
 ResourceID = "[Service]WindowsTime";
- StartupType = "Automatic";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::35::13::Service";
- Name = "W32Time";
  ModuleName = "PsDesiredStateConfiguration";
  State = "Running";
+ Name = "W32Time";
+ StartupType = "Automatic";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::52::9::Service";
 
 ModuleVersion = "1.0";
 DependsOn = {
     "[TimeZone]SetTimeZone"};
  ConfigurationName = "StudentBaseline";
 };
+instance of DSC_IPAddress as $DSC_IPAddress1ref
+{
+ResourceID = "[IPAddress]SetInternalIP";
+ AddressFamily = "IPv4";
+ InterfaceAlias = "Ethernet 2";
+ ModuleVersion = "9.1.0";
+ IPAddress = {
+    "192.168.1.10/24"
+};
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::60::9::IPAddress";
+ ModuleName = "NetworkingDsc";
+
+DependsOn = {
+    "[Computer]SetComputerName"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of DSC_DnsServerAddress as $DSC_DnsServerAddress1ref
+{
+ResourceID = "[DnsServerAddress]SetInternalDns";
+ AddressFamily = "IPv4";
+ InterfaceAlias = "Ethernet 2";
+ ModuleVersion = "9.1.0";
+ ModuleName = "NetworkingDsc";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::67::9::DnsServerAddress";
+ Address = {
+    "127.0.0.1"
+};
+
+DependsOn = {
+    "[IPAddress]SetInternalIP"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of DSC_DnsConnectionSuffix as $DSC_DnsConnectionSuffix1ref
+{
+ConnectionSpecificSuffix = "barmbuzz.corp";
+ ResourceID = "[DnsConnectionSuffix]DisableDnsRegistration";
+ InterfaceAlias = "Ethernet";
+ RegisterThisConnectionsAddress = False;
+ ModuleVersion = "9.1.0";
+ ModuleName = "NetworkingDsc";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::75::9::DnsConnectionSuffix";
+
+DependsOn = {
+    "[DnsServerAddress]SetInternalDns"};
+ ConfigurationName = "StudentBaseline";
+};
 instance of MSFT_RoleResource as $MSFT_RoleResource1ref
 {
-ResourceID = "[WindowsFeature]ADDS";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::77::17::WindowsFeature";
- Name = "AD-Domain-Services";
+Ensure = "Present";
+ ResourceID = "[WindowsFeature]ADDS";
  ModuleName = "PsDesiredStateConfiguration";
- Ensure = "Present";
+ Name = "AD-Domain-Services";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::83::9::WindowsFeature";
 
 ModuleVersion = "1.0";
  ConfigurationName = "StudentBaseline";
 };
 instance of MSFT_RoleResource as $MSFT_RoleResource2ref
 {
-ResourceID = "[WindowsFeature]RSAT_ADDS";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::82::17::WindowsFeature";
- Name = "RSAT-AD-Tools";
+Ensure = "Present";
+ ResourceID = "[WindowsFeature]RSATADDS";
  ModuleName = "PsDesiredStateConfiguration";
- Ensure = "Present";
+ Name = "RSAT-AD-Tools";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::88::9::WindowsFeature";
 
 ModuleVersion = "1.0";
 DependsOn = {
@@ -65,7 +111,7 @@ DependsOn = {
 instance of MSFT_Credential as $MSFT_Credential1ref
 {
 UserName = "Administrator";
- Password = "superw1n_user";
+ Password = "Superw1n_user";
 
 };
 
@@ -78,19 +124,19 @@ UserName = "Administrator";
 
 instance of MSFT_ADDomain as $MSFT_ADDomain1ref
 {
-ResourceID = "[ADDomain]CreateForest";
+SafeModeAdministratorPassword = $MSFT_Credential1ref;
+ ResourceID = "[ADDomain]CreateForest";
  DomainNetBiosName = "BARMBUZZ";
  ForestMode = "WinThreshold";
- ModuleVersion = "6.7.1";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::88::17::ADDomain";
- SafeModeAdministratorPassword = $MSFT_Credential1ref;
- ModuleName = "ActiveDirectoryDsc";
- Credential = $MSFT_Credential2ref;
  DomainName = "barmbuzz.corp";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::95::9::ADDomain";
+ Credential = $MSFT_Credential2ref;
  DomainMode = "WinThreshold";
 
 DependsOn = {
-    "[WindowsFeature]RSAT_ADDS"};
+    "[WindowsFeature]RSATADDS"};
  ConfigurationName = "StudentBaseline";
 };
 instance of MSFT_Credential as $MSFT_Credential3ref
@@ -102,15 +148,762 @@ UserName = "Administrator";
 
 instance of MSFT_WaitForADDomain as $MSFT_WaitForADDomain1ref
 {
-ResourceID = "[WaitForADDomain]WaitForDomain";
- ModuleVersion = "6.7.1";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::98::17::WaitForADDomain";
- ModuleName = "ActiveDirectoryDsc";
- Credential = $MSFT_Credential3ref;
+ResourceID = "[WaitForADDomain]WaitForBarmBuzz";
  DomainName = "barmbuzz.corp";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::105::9::WaitForADDomain";
+ Credential = $MSFT_Credential3ref;
 
 DependsOn = {
     "[ADDomain]CreateForest"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential4ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit1ref
+{
+Ensure = "Present";
+ Path = "DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_BarmBuzz";
+ Description = "Root OU for BarmBuzz Corporation, Silcon Bolton HQ";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "BarmBuzz";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential4ref;
+
+DependsOn = {
+    "[WaitForADDomain]WaitForBarmBuzz"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential5ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit2ref
+{
+Ensure = "Present";
+ Path = "OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Tier0";
+ Description = "Domain Control Plane - Restricted admin Tier";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Tier0";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential5ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_BarmBuzz"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential6ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit3ref
+{
+Ensure = "Present";
+ Path = "OU=Tier0,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Tier0_Admins";
+ Description = "Domain Administrator account";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Admins";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential6ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Tier0"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential7ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit4ref
+{
+Ensure = "Present";
+ Path = "OU=Tier0,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Tier0_Servers";
+ Description = "Domain Infrastructure Servers";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Servers";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential7ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Tier0"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential8ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit5ref
+{
+Ensure = "Present";
+ Path = "OU=Tier0,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Tier0_ServiceAccounts";
+ Description = "Service Accounts for Domain Level Privileges";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "ServiceAccounts";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential8ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Tier0"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential9ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit6ref
+{
+Ensure = "Present";
+ Path = "OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Sites";
+ Description = "Geographic Site Container";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Sites";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential9ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_BarmBuzz"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential10ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit7ref
+{
+Ensure = "Present";
+ Path = "OU=Sites,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Bolton";
+ Description = "Bolton HQ Silcon Croal Valley campus";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Bolton";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential10ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Sites"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential11ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit8ref
+{
+Ensure = "Present";
+ Path = "OU=Bolton,OU=Sites,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Bolton_Users";
+ Description = "Bolton staff, Managers, Drivers and Support Staff";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Users";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential11ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Bolton"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential12ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit9ref
+{
+Ensure = "Present";
+ Path = "OU=Bolton,OU=Sites,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Bolton_Computers";
+ Description = "Bolton Computer Accounts";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Computers";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential12ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Bolton"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential13ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit10ref
+{
+Ensure = "Present";
+ Path = "OU=Computers,OU=Bolton,OU=Sites,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Bolton_Workstations";
+ Description = "Staff Workstations and Depot machines";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Workstations";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential13ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Bolton_Computers"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential14ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit11ref
+{
+Ensure = "Present";
+ Path = "OU=Computers,OU=Bolton,OU=Sites,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Bolton_POS";
+ Description = "POS terminals at Barm Unloading Sectors";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "POS";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential14ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Bolton_Computers"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential15ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit12ref
+{
+Ensure = "Present";
+ Path = "OU=Computers,OU=Bolton,OU=Sites,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Bolton_Kiosks";
+ Description = "Self Service Ordering Kiosks";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Kiosks";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential15ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Bolton_Computers"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential16ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit13ref
+{
+Ensure = "Present";
+ Path = "OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Groups";
+ Description = "Security and Distribution Group Container";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Groups";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential16ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_BarmBuzz"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential17ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit14ref
+{
+Ensure = "Present";
+ Path = "OU=Groups,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Groups_Roles";
+ Description = "Global role Groups (AGDLP: G layer)";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Role";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential17ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Groups"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential18ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit15ref
+{
+Ensure = "Present";
+ Path = "OU=Groups,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Groups_Resource";
+ Description = "Domain Local Resource Groups (AGDLP: DL layer)";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Resource";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential18ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Groups"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential19ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit16ref
+{
+Ensure = "Present";
+ Path = "OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Clients";
+ Description = "Domain-joined client machines by OS";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Clients";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential19ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_BarmBuzz"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential20ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit17ref
+{
+Ensure = "Present";
+ Path = "OU=Clients,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Clients_Windows";
+ Description = "Windows Domain-joined Clients";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Windows";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential20ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Clients"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential21ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADOrganizationalUnit as $MSFT_ADOrganizationalUnit18ref
+{
+Ensure = "Present";
+ Path = "OU=Clients,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADOrganizationalUnit]OU_Clients_Linux";
+ Description = "Linux Domain-joined Clients";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ Name = "Linux";
+ ProtectedFromAccidentalDeletion = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::127::13::ADOrganizationalUnit";
+ Credential = $MSFT_Credential21ref;
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Clients"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential22ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADGroup as $MSFT_ADGroup1ref
+{
+Category = "Security";
+ Credential = $MSFT_Credential22ref;
+ Path = "OU=Role,OU=Groups,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADGroup]Group_GG_Bolton_Baristas";
+ Ensure = "Present";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ GroupScope = "Global";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::154::13::ADGroup";
+ Description = "Bolton baristas - barm assembly and HVBSDP delivery";
+ GroupName = "GG_BB_Bolton_Baristas";
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Groups_Roles"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential23ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADGroup as $MSFT_ADGroup2ref
+{
+Category = "Security";
+ Credential = $MSFT_Credential23ref;
+ Path = "OU=Role,OU=Groups,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADGroup]Group_GG_Bolton_Managers";
+ Ensure = "Present";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ GroupScope = "Global";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::154::13::ADGroup";
+ Description = "Bolton Managers - Depot and route supervisors";
+ GroupName = "GG_BB_Bolton_Managers";
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Groups_Roles"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential24ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADGroup as $MSFT_ADGroup3ref
+{
+Category = "Security";
+ Credential = $MSFT_Credential24ref;
+ Path = "OU=Role,OU=Groups,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADGroup]Group_GG_IT_Helpdesk";
+ Ensure = "Present";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ GroupScope = "Global";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::154::13::ADGroup";
+ Description = "IT Helpdesk - delegated workstation and user support";
+ GroupName = "GG_BB_IT_Helpdesk";
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Groups_Roles"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential25ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADGroup as $MSFT_ADGroup4ref
+{
+Category = "Security";
+ Credential = $MSFT_Credential25ref;
+ Path = "OU=Resource,OU=Groups,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADGroup]Group_DL_POS_LocalAdmins";
+ MembersToInclude = {
+    "GG_BB_Bolton_Baristas"
+};
+ Ensure = "Present";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ GroupScope = "DomainLocal";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::154::13::ADGroup";
+ Description = "Local Admins on POS terminals";
+ GroupName = "DL_BB_POS_LocalAdmins";
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Groups_Resource",
+     "[ADGroup]Group_GG_Bolton_Baristas"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential26ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADGroup as $MSFT_ADGroup5ref
+{
+Category = "Security";
+ Credential = $MSFT_Credential26ref;
+ Path = "OU=Resource,OU=Groups,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADGroup]Group_DL_Recipes_Read";
+ MembersToInclude = {
+    "GG_BB_Bolton_Managers",
+    "GG_BB_Bolton_Baristas"
+};
+ Ensure = "Present";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ GroupScope = "DomainLocal";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::154::13::ADGroup";
+ Description = "Read access to recipe repository";
+ GroupName = "DL_BB_Recipes_Read";
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Groups_Resource",
+     "[ADGroup]Group_GG_Bolton_Managers",
+     "[ADGroup]Group_GG_Bolton_Baristas"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential27ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADGroup as $MSFT_ADGroup6ref
+{
+Category = "Security";
+ Credential = $MSFT_Credential27ref;
+ Path = "OU=Resource,OU=Groups,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ ResourceID = "[ADGroup]Group_DL_Recipes_Write";
+ MembersToInclude = {
+    "GG_BB_Bolton_Managers"
+};
+ Ensure = "Present";
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ GroupScope = "DomainLocal";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::154::13::ADGroup";
+ Description = "Write access to recipe repository";
+ GroupName = "DL_BB_Recipes_Write";
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Groups_Resource",
+     "[ADGroup]Group_GG_Bolton_Managers"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential28ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_Credential as $MSFT_Credential29ref
+{
+UserName = "Sikandar";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADUser as $MSFT_ADUser1ref
+{
+ChangePasswordAtLogon = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::173::13::ADUser";
+ Surname = "Barista";
+ Credential = $MSFT_Credential28ref;
+ GivenName = "Ava";
+ JobTitle = "Senior Barista";
+ Department = "Barm Assembly";
+ Password = $MSFT_Credential29ref;
+ Description = "Bolton barista - HVBSDP certified";
+ DisplayName = "Ava Barista";
+ Enabled = True;
+ ModuleName = "ActiveDirectoryDsc";
+ ModuleVersion = "6.7.1";
+ UserPrincipalName = "ava.barista@barmbuzz.corp";
+ PasswordNeverExpires = False;
+ Path = "OU=Users,OU=Bolton,OU=Sites,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ Ensure = "Present";
+ UserName = "ava.barista";
+ ResourceID = "[ADUser]User_ava_barista";
+ DomainName = "barmbuzz.corp";
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Bolton_Users"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential30ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_Credential as $MSFT_Credential31ref
+{
+UserName = "Sikandar";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADUser as $MSFT_ADUser2ref
+{
+ChangePasswordAtLogon = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::173::13::ADUser";
+ Surname = "Manager";
+ Credential = $MSFT_Credential30ref;
+ GivenName = "Bob";
+ JobTitle = "Depot Manager";
+ Department = "Operations";
+ Password = $MSFT_Credential31ref;
+ Description = "Bolton Depot Manager - route supervisor.";
+ DisplayName = "Bob Manager";
+ Enabled = True;
+ ModuleName = "ActiveDirectoryDsc";
+ ModuleVersion = "6.7.1";
+ UserPrincipalName = "bob.manager@barmbuzz.corp";
+ PasswordNeverExpires = False;
+ Path = "OU=Users,OU=Bolton,OU=Sites,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ Ensure = "Present";
+ UserName = "bob.manager";
+ ResourceID = "[ADUser]User_bob_manager";
+ DomainName = "barmbuzz.corp";
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Bolton_Users"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential32ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_Credential as $MSFT_Credential33ref
+{
+UserName = "Sikandar";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADUser as $MSFT_ADUser3ref
+{
+ChangePasswordAtLogon = True;
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::173::13::ADUser";
+ Surname = "Helpdesk";
+ Credential = $MSFT_Credential32ref;
+ GivenName = "Charlie";
+ JobTitle = "IT Helpdesk Analyst";
+ Department = "IT";
+ Password = $MSFT_Credential33ref;
+ Description = "IT Helpdesk - delegated workstation and user support.";
+ DisplayName = "Charlie Helpdesk";
+ Enabled = True;
+ ModuleName = "ActiveDirectoryDsc";
+ ModuleVersion = "6.7.1";
+ UserPrincipalName = "charlie.helpdesk@barmbuzz.corp";
+ PasswordNeverExpires = False;
+ Path = "OU=Users,OU=Bolton,OU=Sites,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+ Ensure = "Present";
+ UserName = "charlie.helpdesk";
+ ResourceID = "[ADUser]User_Charlie_helpdesk";
+ DomainName = "barmbuzz.corp";
+
+DependsOn = {
+    "[ADOrganizationalUnit]OU_Bolton_Users"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential34ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of MSFT_ADDomainDefaultPasswordPolicy as $MSFT_ADDomainDefaultPasswordPolicy1ref
+{
+SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::197::9::ADDomainDefaultPasswordPolicy";
+ PasswordHistoryCount = 12;
+ Credential = $MSFT_Credential34ref;
+ MinPasswordLength = 10;
+ MaxPasswordAge = 129600;
+ LockoutDuration = 30;
+ MinPasswordAge = 1440;
+ ModuleVersion = "6.7.1";
+ ModuleName = "ActiveDirectoryDsc";
+ LockoutThreshold = 5;
+ LockoutObservationWindow = 30;
+ ComplexityEnabled = True;
+ ResourceID = "[ADDomainDefaultPasswordPolicy]SetPasswordPolicy";
+ DomainName = "barmbuzz.corp";
+
+DependsOn = {
+    "[WaitForADDomain]WaitForBarmBuzz"};
  ConfigurationName = "StudentBaseline";
 };
 instance of OMI_ConfigurationDocument
@@ -124,7 +917,7 @@ instance of OMI_ConfigurationDocument
 
                         Author="Administrator";
 
-                        GenerationDate="03/04/2026 15:13:13";
+                        GenerationDate="03/06/2026 00:05:19";
 
                         GenerationHost="BB-DC01";
 

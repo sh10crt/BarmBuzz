@@ -1,0 +1,28 @@
+**********************
+PowerShell transcript start
+Start time: 20260304165528
+Username: BARMBUZZ\Administrator
+RunAs User: BARMBUZZ\Administrator
+Configuration Name: 
+Machine: BB-DC01 (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -WorkingDirectory ~
+Process ID: 2052
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+[+] Transcript started: Evidence\\Transcripts\\20260304_165528_Run_BuildMain.txt
+[+] Admin privileges confirmed.
+
+[-] BUILD FAILED
+Message: Missing: DSC\\Configurations\\StudentConfig.ps1
+**********************
+PowerShell transcript end
+End time: 20260304165528
+**********************
