@@ -1,16 +1,6 @@
-<<<<<<< HEAD
 BarmBuzz Active Directory Automation
 
 Project Overview:
-=======
-The BarmBuzz Active Directory Automation Project demonstrates how modern infrastructure automation can be used to deploy and manage an enterprise Active Directory environment in a consistent and secure way. The project uses PowerShell Desired State Configuration (DSC) to automatically configure a domain controller, deploy organisational units, create domain users and groups, apply security policies, and join client machines to the domain.
-
-By using infrastructure-as-code principles, the configuration ensures that the Active Directory environment is repeatable, scalable, and compliant with security best practices. The project also implements the ADGLP (Accounts → Global Groups → Domain Local Groups → Permissions) model, delegated administration, and Group Policy Objects to enforce organisational security standards.
-
-This automated approach reduces manual administrative effort while improving the reliability and security of the network infrastructure.
-
------Project Overview-----
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 The following functions are carried out by the configuration:
 It set ups the Domain Controller and generated Domain Users.
 It creates a fresh Active Directory Forest.
@@ -20,49 +10,27 @@ It implements Delegation Administration.
 It uses the ADGLP approach to apply security groups.
 It connects Windows Client computers to the domain.
 
-<<<<<<< HEAD
 Tools Used
-=======
------Tools Used-----
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 The tools facilitate system configuration maintenance, guarantee consistency and lessen
 manual work. We applied the tools like PowerShell Desired State Configuration, GroupPolicy
 DSC, Networking DSC, Computer Management DSC and Windows Server Active Directory
 Domain Services.
 
-<<<<<<< HEAD
 Structure
 BarmBuzz-DSC-Lab
 │
-=======
-----Structure----
-
-BarmBuzz-DSC-Lab
-│
-├──  StudentBaseline.ps1
-│ DSC configuration that reads
-│ AllNodes.psd1 and deploys the environment
-│
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 ├── AllNodes.psd1
 │ Configuration data file containing
 │ domain settings, OU structure,
 │ users, groups, policies and node definitions
 │
-<<<<<<< HEAD
-├── StudentBaseline.ps1
+├── Studenconfig.ps1
 │ DSC configuration that reads
 │ AllNodes.psd1 and deploys the environment
 │
 └── README.md
 
 Domain Information
-=======
-└── README.md
-
-----Domain Information---- 
-
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 Domain Controller:
 Interface “Ethernet” – Internal network
 
@@ -81,11 +49,7 @@ Domain Controller BB-DC01
 Forest Mode Windows Threshold
 Domain Mode Windows Threshold
 
-<<<<<<< HEAD
 Active Directory Structure
-=======
-------Active Directory Structure-----
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 BarmBuzz
 │
 ├── Tier0
@@ -127,11 +91,7 @@ applications, such as
 monitoring systems and
 backup services, employ.
 
-<<<<<<< HEAD
 Sites
-=======
-------Sites----
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 Users Computers
 It keeps the record of all the users for
 staff at the Bolton.
@@ -148,34 +108,20 @@ resource.
 
 GG_BB_Bolton_Managers DL_BB_POS_LocalAdmins
 
-<<<<<<< HEAD
 Clients
-=======
-------Clients-----
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 Applying different rules can be made simple by the OU Clients' separation of machines
 according to operating system type. For example, Windows and Linux are available in OU
 Clients. Linux systems can use various configuration management tools, while Windows
 machines may receive Windows Group Policy.
 
-<<<<<<< HEAD
 Security Group Design
 
 Accounts User
-=======
-------Security Group Design------
-
-------Accounts User-----
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 Global Groups GG_BB_Bolton_Baristas
 Domain Local Groups GG_BB_POS_LocalAdmins
 Permissions Access to POS terminals
 
-<<<<<<< HEAD
 Global Role Groups
-=======
-------Global Role Groups----
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 Groups Purpose
 GG_BB_Bolton_Baristas Bolton Baristas
 GG_BB_Bolton_Managers Bolton depot managers
@@ -277,51 +223,26 @@ Compile DSC configuration: StudentBaseline `
 Start DSC: Start-DscConfiguration -Path .\StudentBaseline -Wait -Verbose -Force
 
 Conclusion:
-<<<<<<< HEAD
-=======
-Gpg was a nightmare when it comes with setting up the path. But AI helped with all the problems and made them quite easier for me.
-Furthermore Syntax is a minor but can be really painfull and with the development and setting uo this It made me realised the importance of small problems needs proper consideration.
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 I found plenty of difficulties during this practical lab, but the primary issue was with Group
 Policies. Some of the GPO configurations weren't working since they are not totally compatible
 with PowerShell 7 on our Windows server.
 I gained a better understanding of how automation may improve safety and flexibility in a
 network environment while also making AD management simpler, quicker, and more structured.
+
+Edivences; 
+Evidence\HealthChecks\{9D74A745-8A45-412E-B5E7-75F7773E6DA4}.png
+Evidence\HealthChecks\{21C55B47-E668-4362-983E-F4975CEAD167}.png
+Evidence\HealthChecks\{41BB4F62-AAF4-416A-B7E6-84F993534BE6}.png
+Evidence\HealthChecks\{8073D626-6169-4F1E-A4E4-EE3A798433D1}.png
+Evidence\HealthChecks\{3851482F-89CB-4D80-8E49-10D2D07FE781}.png
+Evidence\HealthChecks\{AE9B0343-8F0F-485C-A6D4-DB2C337AF4C3}.png
+Evidence\HealthChecks\{B90A2AB7-52EC-4B2E-BC3E-BFEFB1D15CD2}.png
+Evidence\HealthChecks\{FD3EE666-D7E2-480E-B544-B0753DA5F998}.png
 Refernces:
-<<<<<<< HEAD
 Bertram, A.R. (2020) PowerShell for sysadmins: workflow automation made easy. 1st edn. San Francisco, CA: No Starch Press.
 
 Francis, D. (2021) ‘Advanced AD Management with PowerShell,’ in Mastering Active Directory. United Kingdom: Packt Publishing, Limited.
 
-=======
-Microsoft (2024) Active Directory Domain Services Overview. Available at:
-https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview
-
-Microsoft (2024) PowerShell Desired State Configuration (DSC) Documentation. Available at:
-https://learn.microsoft.com/en-us/powershell/dsc/overview
-
-Microsoft (2024) Group Policy Overview. Available at:
-https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-overview
-
-Microsoft (2024) Active Directory Security Best Practices. Available at:
-https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices
-
-Microsoft (2024) Delegating Administration in Active Directory. Available at:
-https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/delegation/delegating-administration
-
-Microsoft (2024) Group Policy Security Baselines. Available at:
-https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines
-
-Center for Internet Security (2023) CIS Microsoft Windows Server Benchmark. Available at:
-https://www.cisecurity.org/cis-benchmarks
-
-National Institute of Standards and Technology (2020) Security and Privacy Controls for Information Systems (NIST SP 800-53). Available at:
-https://nvd.nist.gov
-Bertram, A.R. (2020) PowerShell for sysadmins: workflow automation made easy. 1st edn. San Francisco, CA: No Starch Press.
-
-Francis, D. (2021) ‘Advanced AD Management with PowerShell,’ in Mastering Active Directory. United Kingdom: Packt Publishing, Limited.
-
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 Lee, T. (2021) Windows Server Automation with PowerShell Cookbook. 4th edn. Packt Publishing.
 
 Sukhija, V. (2021) PowerShell Fast Track: Hacks for Non-Coders. 1st edn. Berkeley, CA: Apress.
