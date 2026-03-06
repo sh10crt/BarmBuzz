@@ -1,22 +1,36 @@
 /*
 @TargetNode='BB-WIN11-01'
 @GeneratedBy=Administrator
+<<<<<<< HEAD
 @GenerationDate=03/06/2026 00:05:19
+=======
+@GenerationDate=03/06/2026 01:24:44
+>>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 @GenerationHost=BB-DC01
 */
 
 instance of DSC_TimeZone as $DSC_TimeZone1ref
 {
+<<<<<<< HEAD
 ResourceID = "[TimeZone]SetClientTimeZone";
  TimeZone = "GMT Standard Time";
  IsSingleInstance = "Yes";
  ModuleVersion = "10.0.0";
  ModuleName = "ComputerManagementDsc";
  SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::218::9::TimeZone";
+=======
+TimeZone = "GMT Standard Time";
+ IsSingleInstance = "Yes";
+ ModuleVersion = "10.0.0";
+ ModuleName = "ComputerManagementDsc";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::218::9::TimeZone";
+ ResourceID = "[TimeZone]SetClientTimeZone";
+>>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
  ConfigurationName = "StudentBaseline";
 };
 instance of DSC_DnsServerAddress as $DSC_DnsServerAddress1ref
 {
+<<<<<<< HEAD
 ResourceID = "[DnsServerAddress]SetDnsToDC";
  AddressFamily = "IPv4";
  InterfaceAlias = "Ethernet";
@@ -26,6 +40,17 @@ ResourceID = "[DnsServerAddress]SetDnsToDC";
  Address = {
     "192.168.99.10"
 };
+=======
+InterfaceAlias = "Ethernet";
+ Address = {
+    "192.168.99.10"
+};
+ ModuleVersion = "9.1.0";
+ ModuleName = "NetworkingDsc";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::223::9::DnsServerAddress";
+ ResourceID = "[DnsServerAddress]SetDnsToDC";
+ AddressFamily = "IPv4";
+>>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
  ConfigurationName = "StudentBaseline";
 };
 instance of MSFT_Credential as $MSFT_Credential1ref
@@ -37,6 +62,7 @@ UserName = "Administrator";
 
 instance of DSC_Computer as $DSC_Computer1ref
 {
+<<<<<<< HEAD
 ResourceID = "[Computer]JoinDomain";
  DomainName = "barmbuzz.corp";
  ModuleVersion = "10.0.0";
@@ -45,6 +71,16 @@ ResourceID = "[Computer]JoinDomain";
  Name = "BB-WIN11-01";
  SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::229::9::Computer";
  Credential = $MSFT_Credential1ref;
+=======
+Credential = $MSFT_Credential1ref;
+ ModuleVersion = "10.0.0";
+ ModuleName = "ComputerManagementDsc";
+ DomainName = "barmbuzz.corp";
+ ResourceID = "[Computer]JoinDomain";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::229::9::Computer";
+ Name = "BB-WIN11-01";
+ JoinOU = "OU=Windows,OU=Clients,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+>>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 
 DependsOn = {
     "[DnsServerAddress]SetDnsToDC"};
@@ -52,8 +88,39 @@ DependsOn = {
 };
 instance of MSFT_ServiceResource as $MSFT_ServiceResource1ref
 {
+<<<<<<< HEAD
 ResourceID = "[Service]WindowsTimeClient";
+=======
+StartupType = "Automatic";
+>>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
  ModuleName = "PsDesiredStateConfiguration";
+ ResourceID = "[Service]WindowsTimeClient";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::237::9::Service";
+ Name = "W32Time";
+ State = "Running";
+
+ModuleVersion = "1.0";
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_WindowsOptionalFeature as $MSFT_WindowsOptionalFeature1ref
+{
+Ensure = "Disable";
+ ModuleName = "PsDesiredStateConfiguration";
+ NoWindowsUpdateCheck = True;
+ ResourceID = "[WindowsOptionalFeature]DisableSMBv1Client";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::243::9::WindowsOptionalFeature";
+ Name = "SMB1Protocol";
+
+ModuleVersion = "1.0";
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_ServiceResource as $MSFT_ServiceResource2ref
+{
+StartupType = "Automatic";
+ ModuleName = "PsDesiredStateConfiguration";
+ ResourceID = "[Service]WindowsFirewall";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::249::9::Service";
+ Name = "mpsSvc";
  State = "Running";
  Name = "W32Time";
  StartupType = "Automatic";
@@ -97,7 +164,11 @@ instance of OMI_ConfigurationDocument
 
                         Author="Administrator";
 
+<<<<<<< HEAD
                         GenerationDate="03/06/2026 00:05:19";
+=======
+                        GenerationDate="03/06/2026 01:24:44";
+>>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
 
                         GenerationHost="BB-DC01";
 
