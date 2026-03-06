@@ -1,7 +1,6 @@
 Design Notes (Sh10crt)
 Explanation:
 
-<<<<<<< HEAD
 OU structure rationale
 Group model rationale
 GPO linking choices (later)
@@ -56,4 +55,3 @@ BarmBuzz
 
 ├── Windows
 └── Linux
->>>>>>> 3edaf51df2458ac32a5df360e19e9354ce099bb7
