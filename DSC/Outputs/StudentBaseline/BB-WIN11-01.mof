@@ -1,41 +1,89 @@
 /*
 @TargetNode='BB-WIN11-01'
 @GeneratedBy=Administrator
-@GenerationDate=03/04/2026 15:13:13
+@GenerationDate=03/06/2026 01:24:44
 @GenerationHost=BB-DC01
 */
 
-instance of DSC_Computer as $DSC_Computer1ref
-{
-ResourceID = "[Computer]SetName";
- Name = "BB-WIN11-01";
- ModuleVersion = "10.0.0";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::26::13::Computer";
- ModuleName = "ComputerManagementDsc";
- ConfigurationName = "StudentBaseline";
-};
 instance of DSC_TimeZone as $DSC_TimeZone1ref
 {
-ResourceID = "[TimeZone]SetTimeZone";
+TimeZone = "GMT Standard Time";
+ IsSingleInstance = "Yes";
  ModuleVersion = "10.0.0";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::30::13::TimeZone";
  ModuleName = "ComputerManagementDsc";
- TimeZone = "GMT Standard Time";
- IsSingleInstance = "Yes";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::218::9::TimeZone";
+ ResourceID = "[TimeZone]SetClientTimeZone";
+ ConfigurationName = "StudentBaseline";
+};
+instance of DSC_DnsServerAddress as $DSC_DnsServerAddress1ref
+{
+InterfaceAlias = "Ethernet";
+ Address = {
+    "192.168.99.10"
+};
+ ModuleVersion = "9.1.0";
+ ModuleName = "NetworkingDsc";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::223::9::DnsServerAddress";
+ ResourceID = "[DnsServerAddress]SetDnsToDC";
+ AddressFamily = "IPv4";
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_Credential as $MSFT_Credential1ref
+{
+UserName = "Administrator";
+ Password = "superw1n_user";
+
+};
+
+instance of DSC_Computer as $DSC_Computer1ref
+{
+Credential = $MSFT_Credential1ref;
+ ModuleVersion = "10.0.0";
+ ModuleName = "ComputerManagementDsc";
+ DomainName = "barmbuzz.corp";
+ ResourceID = "[Computer]JoinDomain";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::229::9::Computer";
+ Name = "BB-WIN11-01";
+ JoinOU = "OU=Windows,OU=Clients,OU=BarmBuzz,DC=barmbuzz,DC=corp";
+
+DependsOn = {
+    "[DnsServerAddress]SetDnsToDC"};
  ConfigurationName = "StudentBaseline";
 };
 instance of MSFT_ServiceResource as $MSFT_ServiceResource1ref
 {
-ResourceID = "[Service]WindowsTime";
- StartupType = "Automatic";
- SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::35::13::Service";
- Name = "W32Time";
+StartupType = "Automatic";
  ModuleName = "PsDesiredStateConfiguration";
+ ResourceID = "[Service]WindowsTimeClient";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::237::9::Service";
+ Name = "W32Time";
  State = "Running";
 
 ModuleVersion = "1.0";
-DependsOn = {
-    "[TimeZone]SetTimeZone"};
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_WindowsOptionalFeature as $MSFT_WindowsOptionalFeature1ref
+{
+Ensure = "Disable";
+ ModuleName = "PsDesiredStateConfiguration";
+ NoWindowsUpdateCheck = True;
+ ResourceID = "[WindowsOptionalFeature]DisableSMBv1Client";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::243::9::WindowsOptionalFeature";
+ Name = "SMB1Protocol";
+
+ModuleVersion = "1.0";
+ ConfigurationName = "StudentBaseline";
+};
+instance of MSFT_ServiceResource as $MSFT_ServiceResource2ref
+{
+StartupType = "Automatic";
+ ModuleName = "PsDesiredStateConfiguration";
+ ResourceID = "[Service]WindowsFirewall";
+ SourceInfo = "C:\\Dev\\repos\\BarmBuzz\\DSC\\Configurations\\StudentConfig.ps1::249::9::Service";
+ Name = "mpsSvc";
+ State = "Running";
+
+ModuleVersion = "1.0";
  ConfigurationName = "StudentBaseline";
 };
 instance of OMI_ConfigurationDocument
@@ -49,7 +97,7 @@ instance of OMI_ConfigurationDocument
 
                         Author="Administrator";
 
-                        GenerationDate="03/04/2026 15:13:13";
+                        GenerationDate="03/06/2026 01:24:44";
 
                         GenerationHost="BB-DC01";
 

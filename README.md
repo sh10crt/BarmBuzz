@@ -1,317 +1,271 @@
-# COM5411 Enterprise Operating Systems (BarmBuzz) – Student Repository
-
-This repository is the single source of truth for your build, your evidence, and your assessment submission.
-
-If you follow the instructions in this file exactly, you will produce:
-- A repeatable infrastructure build (IaC approach using DSC as the automation engine)
-- A consistent evidence trail in Git (to protect you from allegations of contract cheating)
-- A structure that matches the assessment ZIP layout
-
----
-
-## 0) The One-Rule to Workflow them all!
-
-You do **NOT** run a random set of commands.
-
-There is only **one entry script** that You run...
-
-**Run_BuildMain.ps1**
-
-That script will do everything in this order:
-1. Environment checks (admin, paths, folder structure)
-2. Prerequisites setup (tutor-provided)
-3. Compile + apply DSC configuration (your work)
-4. Validation (tutor-provided tests)
-
-If something fails, you fix the issue and run Run_BuildMain.ps1 again.
-
----
-
-## 1) What You Must Edit (and what you must absolutly NOT, like don't even think about editing!)
-
-You edit **ONLY** these two files:
-
-1. DSC\Configurations\StudentConfig.ps1  
-   Your DSC configuration logic (the “what to build”)
-
-2. DSC\Data\AllNodes.psd1  
-   Your configuration data (the “values for this environment”)
-
-Everything else in this repo is tutor-provided scaffolding or evidence structure.
-Do not rename folders. Do not invent your own structure. Marking assumes these paths.
-
----
-
-## 2) Passwords and Accounts (Fixed for this lab)
-
-To reduce mistakes and speed up support, this module uses fixed lab credentials.
-
-### 2.1 Built-in Administrator (Windows)
-- Username: **Administrator**
-- Password: **superw1n_user**
-
-This is the account used for administration tasks during the build.
-
-### 2.2 End-user accounts you create
-All end-user accounts you create for the scenario must use:
-- Password: **notlob2k26**
-
-### 2.3 Important: do not improvise passwords
-If you use different passwords, you will break automation runs and support will not debug it.
-
-### 2.4 🔐 CRITICAL SECURITY RULE: NEVER commit credentials
-
-**YOU MUST NOT hardcode passwords into `StudentConfig.ps1` or `AllNodes.psd1`.**
-
-**Why this matters on a Cybersecurity degree:**
-Real-world incidents:
-- **2021 Uber breach**: Engineer committed AWS keys to GitHub → $100k unauthorized charges, termination, company fined
-- **2019 Capital One breach**: Misconfigured credentials → 100M customer records stolen, $80M fine
-- **2020 Codecov supply chain**: Exposed credentials in CI/CD → 29,000+ organizations compromised
-
-**What happens when you commit a secret:**
-1. It's in Git history **FOREVER** (even if you delete it 5 seconds later)
-2. GitHub/GitLab/Bitbucket scan for secrets automatically (you WILL get flagged)
-3. If your repo ever becomes public (portfolio, etc.) → instant breach
-4. Tools like TruffleHog, git-secrets, and GitGuardian can find it years later
-5. Employers check your GitHub - this is a red flag that ends interviews
-
-**The ONLY fix for a committed secret:**
-- Rotate the credential (change the password/key)
-- Deleting the file does NOT remove it from Git history
-- Rewriting history (`git rebase`) is complex and often fails
-
-**Professional alternatives (what we're teaching you):**
-- Credentials passed at runtime (what Run_BuildMain.ps1 will do)
-- Vault systems: Azure KeyVault, AWS Secrets Manager, HashiCorp Vault
-- Certificate-based encryption for DSC MOFs (production pattern)
-- Environment variables (better than hardcoding, but not ideal)
-- CI/CD secrets management (GitHub Actions Secrets, GitLab CI Variables)
-
-**For this lab:**
-- Fixed passwords are documented HERE in the README (acceptable for academic lab context)
-- Use them MANUALLY when needed (PowerShell sessions, testing)
-- The orchestrator will handle credential injection when DSC resources need them
-- You'll learn the secure pattern by following the provided mechanism
-
-**Threat model awareness:**
-Even in a lab, practice defense-in-depth:
-- Assume your repo will be cloned by classmates, internal and external examiners and of   course your module tutor. 
-- Assume your evidence logs will be read and audited
-- Assume you'll put this repo on your GitHub profile for job applications
-- Practice like you'll work: secure by default
-
-COme on, be the pro this is 2026.
-
----
-
-## 3) What Must Be Committed to Git (Evidence Discipline)
-
-This module has an explicit anti-contract-cheating design: your Git history is part of your evidence.
-
-You MUST commit:
-- Your changes to StudentConfig.ps1 and AllNodes.psd1
-- Outputs under DSC\Outputs\
-- Evidence under Evidence\
-
-This is deliberate. These are the artefacts that prove *you* ran the build and generated outputs.
-
-### What goes where
-
-- DSC\Outputs\
-  Compiled configuration outputs (e.g., MOF files). Generated when you run the build.
-
-- Evidence\Transcripts\
-  PowerShell transcripts from build runs (proof you executed the pipeline).
-
-- Evidence\DSC\
-  DSC build logs, apply outputs, and any staging artefacts.
-
-- Evidence\Pester\
-  Validation outputs (later) from tutor-provided tests.
-
-- Evidence\AD\
-  Exports/snapshots of AD objects and directory state (later).
-
-- Evidence\GPOBackups\
-  Backups/exports of GPOs (later).
-
-- Evidence\HealthChecks\
-  Health check outputs (dcdiag/repadmin summaries etc., later).
-
-- Evidence\Network\
-  Evidence for DNS/time/IP configuration (because most failures are networking).
-
-- Evidence\Git\Reflog\
-  Evidence of your Git activity as required.
-
-- Evidence\AI_LOG\AI-Usage.md
-  You must log any AI usage here, including what you changed afterwards.
-
----
-
-## 4) First-Time Setup (Week 1 baseline)
-
-### Step A: Create your repo and first commit
-From the repo root:
-
-1. git init
-2. git add .
-3. git commit -m "Initial scaffold"
-
-### Step B: Open PowerShell as Administrator
-You must run builds as Administrator.
-
-- Start Menu → Terminal → Right-click → Run as Administrator
-- Make sure your starting terminal is Powershell 7 (pwsh) the dark blue icon
-- Then cd into your repo folder
-
-### Step C: Run the orchestrator
-Run:
-
-.\Run_BuildMain.ps1
-
-Right now the orchestrator is a placeholder in this scaffold.
-Your tutor will provide the working orchestrator and prerequisite scripts.
-
----
-
-## 5) Your Work Each Week (the pattern)
-
-Each week you will:
-1. Edit AllNodes.psd1 to describe the desired environment (data)
-2. Edit StudentConfig.ps1 to implement the desired environment (configuration)
-3. Run Run_BuildMain.ps1 to compile/apply
-4. Review outputs written into DSC\Outputs\ and Evidence\
-5. Commit the changes and generated outputs to Git
-
-Your commits should be small and meaningful:
-- "Add OU structure for Corp"
-- "Add groups GG-Staff and GG-IT-Admins"
-- "Link baseline GPO to Workstations OU"
-
----
-
-## 6) Common Failure Modes (read this before asking for help)
-
-1. You did not run PowerShell as Administrator  
-   Result: DSC cannot apply config, AD install fails, permission errors.
-
-2. You edited files outside the two student files  
-   Result: merge conflicts, broken scaffolding, unexpected marking failures.
-
-3. Your folder names don’t match the scaffold  
-   Result: build scripts cannot find assets; evidence is not where expected.
-
-4. You used different passwords  
-   Result: scripts break, users cannot authenticate, support cannot reproduce.
-
-5. You did not commit generated evidence  
-   Result: you lose proof of work and may be challenged on authenticity.
-
----
-
-## 7) Minimal Student Responsibilities (Pass-focused)
-
-To pass you must show:
-- A working automated build pipeline (repeatable runs)
-- Correct AD structures (OUs/users/groups) driven from your code/data
-- Evidence outputs committed to Git
-- Validation outputs (later, tutor-provided tests)
-
-Higher grades add extra architecture and security sophistication, but a pass is achievable with the baseline.
-
----
-
-## 8) Testing Infrastructure (Pester)
-
-### 8.1 Test Harness Overview
-This repository includes a Pester test harness for validation and evidence collection.
-
-**Test Runner:**
-```powershell
-.\Tests\Pester\Invoke-Validation.ps1
-```
-
-This discovers and runs all `*.Tests.ps1` files in `Tests\Pester\` and automatically:
-- Injects `$RepoRoot` and `$EvidenceDir` into your tests
-- Saves XML results to `Evidence\Pester\PesterResults_*.xml`
-- Provides detailed output for debugging
-
-### 8.2 Running Tests
-
-**Run all tests:**
-```powershell
-.\Tests\Pester\Invoke-Validation.ps1
-```
-
-**Run specific test file:**
-```powershell
-.\Tests\Pester\Invoke-Validation.ps1 PreDCPromo.Tests.ps1
-```
-
-**Run with less verbose output:**
-```powershell
-.\Tests\Pester\Invoke-Validation.ps1 -Output Normal
-```
-
-**Run without saving XML (development):**
-```powershell
-.\Tests\Pester\Invoke-Validation.ps1 -NoResultFile
-```
-
-### 8.3 Available Tests
-
-- **Preflight-Environment.Tests.ps1** - Validates PowerShell environment, modules, and tooling
-- **Test-ProofOfLife.Tests.ps1** - Verifies DSC can create basic resources
-- **PreDCPromo.Tests.ps1** - Pre-DC promotion network and feature readiness checks
-- **Baseline.Tests.ps1** - Server baseline validation
-- **Template.Tests.ps1** - Example test patterns you can copy
-- **Hello.Tests.ps1** - Minimal smoke test
-
-### 8.4 Writing Your Own Tests
-
-Test files automatically receive `$RepoRoot` and `$EvidenceDir` parameters.
-
-**Basic template:**
-```powershell
-BeforeAll {
-  param($RepoRoot, $EvidenceDir)
-  
-  # Load your config
-  $cfg = Import-PowerShellDataFile (Join-Path $RepoRoot 'DSC\Data\AllNodes.psd1')
-  
-  # Test setup
+The BarmBuzz Active Directory Automation Project demonstrates how modern infrastructure automation can be used to deploy and manage an enterprise Active Directory environment in a consistent and secure way. The project uses PowerShell Desired State Configuration (DSC) to automatically configure a domain controller, deploy organisational units, create domain users and groups, apply security policies, and join client machines to the domain.
+
+By using infrastructure-as-code principles, the configuration ensures that the Active Directory environment is repeatable, scalable, and compliant with security best practices. The project also implements the ADGLP (Accounts → Global Groups → Domain Local Groups → Permissions) model, delegated administration, and Group Policy Objects to enforce organisational security standards.
+
+This automated approach reduces manual administrative effort while improving the reliability and security of the network infrastructure.
+
+-----Project Overview-----
+The following functions are carried out by the configuration:
+It set ups the Domain Controller and generated Domain Users.
+It creates a fresh Active Directory Forest.
+It builds Organizational Unites (OU).
+It applies the registry-based security settings.
+It implements Delegation Administration.
+It uses the ADGLP approach to apply security groups.
+It connects Windows Client computers to the domain.
+
+-----Tools Used-----
+The tools facilitate system configuration maintenance, guarantee consistency and lessen
+manual work. We applied the tools like PowerShell Desired State Configuration, GroupPolicy
+DSC, Networking DSC, Computer Management DSC and Windows Server Active Directory
+Domain Services.
+
+----Structure----
+
+BarmBuzz-DSC-Lab
+│
+├──  StudentBaseline.ps1
+│ DSC configuration that reads
+│ AllNodes.psd1 and deploys the environment
+│
+├── AllNodes.psd1
+│ Configuration data file containing
+│ domain settings, OU structure,
+│ users, groups, policies and node definitions
+│
+└── README.md
+
+----Domain Information---- 
+
+Domain Controller:
+Interface “Ethernet” – Internal network
+
+“IP Address: 10.0.2.15
+Subnet: /24
+DNS: 127.0.0.1”
+Interface “Ethernet2” – External network
+“IP Address 192.168.1.10
+Subnet:/24
+DNS: 127.0.0.1”
+
+Settings Values
+Domain Name BarmBuzz.corp
+NetBIOS Name BARMBUZZ
+Domain Controller BB-DC01
+Forest Mode Windows Threshold
+Domain Mode Windows Threshold
+
+------Active Directory Structure-----
+BarmBuzz
+│
+├── Tier0
+│ ├── Admins
+│ ├── Servers
+│ └── ServiceAccounts
+│
+├── Sites
+│ └── Bolton
+│ ├── Users
+│ └── Computers
+│ ├── Workstations
+│ ├── POS
+│ └── Kiosks
+│
+├── Groups
+│ ├── Role
+│ └── Resource
+│
+└── Clients
+
+├── Windows
+└── Linux
+
+Tier 0
+Admins Servers ServiceAccounts
+It manages the AD,
+Domain Controller, and
+security policies.
+
+It separates the Domain
+controller which helps to
+apply specific security
+policies for servers.
+
+It includes service
+accounts that
+applications, such as
+monitoring systems and
+backup services, employ.
+
+------Sites----
+Users Computers
+It keeps the record of all the users for
+staff at the Bolton.
+
+It contains the join domain devices in
+the Bolton.
+
+Example: Managers Example: workstations, POS
+Groups
+Role Resource
+It represents the job roles. It controls the access to specific
+
+resource.
+
+GG_BB_Bolton_Managers DL_BB_POS_LocalAdmins
+
+------Clients-----
+Applying different rules can be made simple by the OU Clients' separation of machines
+according to operating system type. For example, Windows and Linux are available in OU
+Clients. Linux systems can use various configuration management tools, while Windows
+machines may receive Windows Group Policy.
+
+------Security Group Design------
+
+------Accounts User-----
+Global Groups GG_BB_Bolton_Baristas
+Domain Local Groups GG_BB_POS_LocalAdmins
+Permissions Access to POS terminals
+
+------Global Role Groups----
+Groups Purpose
+GG_BB_Bolton_Baristas Bolton Baristas
+GG_BB_Bolton_Managers Bolton depot managers
+GG_BB_IT_Helpdesk IT helpdesk staff
+
+Domain Local resource Groups
+Groups Purpose
+DL_BB_POS_LocalAdmins Local admin access on POS terminals
+DL_BB_Recipes_Read Read access to recipe repository
+DL_BB_Recipes_Write Write Access to recipe repository
+
+Delegated Administration
+Active Directory Delegation is demonstrated in this project. Here, authorisation to add
+computers to the domain and remove computer objects is given to the IT helpdesk team.
+Permission given to the group: GG_BB_IT_Helpdesk
+Delegation responses to: OU=Computers, OU=Workstations, and OU=Bolton
+Domain Users
+Users Role
+Ava.barista Senior Barista
+Bob.manager Depot Manager
+Charlie.helpdesk IT Helpdesk Analyst
+
+Password Policy
+Setting Value
+Minimum Length 10
+Password History 12
+Maximum Age 90 days
+Minimum Age 1 day
+Account Lockout 5 attempts
+Lockout duration 30 minutes
+Group Policy Object (PGO)
+GPO Name Purpose
+BB_Workstation_Baseline Workstation security baseline
+BB_Servers_Baseline Server baseline policies
+BB_POS_Lockdown POS terminal restrictions
+BB_Allusers_Banner Logon banner
+
+Client Configuration
+Client: BB-WIN11-01
+Time Zone - we’ll set the correct time zone for the client by using this code
+TimeZone SetClientTimeZone {
+
+IsSingleInstance = 'Yes'
+TimeZone = $Node.TimeZone # e.g., 'GMT Standard Time'
+}
+DNS Server - then, we’ll configure DNS to point to the domain controller with this code
+DnsServerAddress SetDnsToDC {
+InterfaceAlias = $Node.InterfaceAlias_Internal # e.g., 'Ethernet'
+Address = $Node.DnsServerAddress # e.g., '192.168.99.10'
+AddressFamily = 'IPv4'
 }
 
-Describe "My Tests" {
-  It "Should do something" {
-    $true | Should -Be $true
-  }
+Join Domain – by using this code, we’ll join the client to the Active Directory domain in the
+correct OU
+Computer JoinDomain {
+Name = $Node.ComputerName # e.g., 'BB-WIN11-01'
+DomainName = $Node.DomainName # e.g., 'barmbuzz.corp'
+JoinOU = $Node.JoinOU # e.g., 'OU=Windows,OU=Clients,OU=BarmBuzz'
+Credential = $DomainAdminCredential # Domain admin credentials
+DependsOn = '[DnsServerAddress]SetDnsToDC'
 }
-```
 
-See `Tests\Pester\Template.Tests.ps1` for comprehensive examples.
+Windows Time Services
+Service WindowsTimeClient {
+Name = 'W32Time'
+State = 'Running'
+StartupType = 'Automatic'
+}
 
-### 8.5 Test Results and Evidence
+Security Features
+# Disable SMBv1 (legacy protocol)
+WindowsOptionalFeature DisableSMBv1Client {
+Name = 'SMB1Protocol'
+Ensure = 'Disable'
+NoWindowsUpdateCheck = $true
+}
 
-Results are saved as NUnit XML format in `Evidence\Pester\`:
-- Timestamped for each run
-- Industry-standard format (CI/CD compatible)
-- Commit these to Git as proof of validation
+# Ensure Windows Firewall is running
+Service WindowsFirewall {
+Name = 'mpsSvc'
+State = 'Running'
+StartupType = 'Automatic'
+}
 
----
+DSC Configuration
+In our configuration file, we did configuration like import the configuration, create credentials,
+compile DSC configuration and start DSC.
+Import the configuration: .\StudentBaseline.ps1
+Create Credentials: $DomainAdminCredential = Get-Credential
+$DsrmCredential = Get-Credential
+$UserCredential = Get-Credential
 
-## 9) Where to Start Right Now
+Compile DSC configuration: StudentBaseline `
+-ConfigurationData .\AllNodes.psd1 `
+-DomainAdminCredential $DomainAdminCredential `
+-DsrmCredential $DsrmCredential `
+-UserCredential $UserCredential
 
-Open:
-- DSC\Data\AllNodes.psd1
-- DSC\Configurations\StudentConfig.ps1
+Start DSC: Start-DscConfiguration -Path .\StudentBaseline -Wait -Verbose -Force
 
-Week 1 goal:
-- Make a tiny, safe DSC resource work (e.g., create a folder)
-- Run `.\Tests\Pester\Invoke-Validation.ps1` to verify
-- This proves you can compile/apply and generate outputs and evidence
+Conclusion:
+Gpg was a nightmare when it comes with setting up the path. But AI helped with all the problems and made them quite easier for me.
+Furthermore Syntax is a minor but can be really painfull and with the development and setting uo this It made me realised the importance of small problems needs proper consideration.
+I found plenty of difficulties during this practical lab, but the primary issue was with Group
+Policies. Some of the GPO configurations weren't working since they are not totally compatible
+with PowerShell 7 on our Windows server.
+I gained a better understanding of how automation may improve safety and flexibility in a
+network environment while also making AD management simpler, quicker, and more structured.
+Refernces:
+Microsoft (2024) Active Directory Domain Services Overview. Available at:
+https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview
 
-Then you will expand toward AD DS, OUs, users, groups, and policy.
+Microsoft (2024) PowerShell Desired State Configuration (DSC) Documentation. Available at:
+https://learn.microsoft.com/en-us/powershell/dsc/overview
 
+Microsoft (2024) Group Policy Overview. Available at:
+https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-overview
+
+Microsoft (2024) Active Directory Security Best Practices. Available at:
+https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices
+
+Microsoft (2024) Delegating Administration in Active Directory. Available at:
+https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/delegation/delegating-administration
+
+Microsoft (2024) Group Policy Security Baselines. Available at:
+https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines
+
+Center for Internet Security (2023) CIS Microsoft Windows Server Benchmark. Available at:
+https://www.cisecurity.org/cis-benchmarks
+
+National Institute of Standards and Technology (2020) Security and Privacy Controls for Information Systems (NIST SP 800-53). Available at:
+https://nvd.nist.gov
+Bertram, A.R. (2020) PowerShell for sysadmins: workflow automation made easy. 1st edn. San Francisco, CA: No Starch Press.
+
+Francis, D. (2021) ‘Advanced AD Management with PowerShell,’ in Mastering Active Directory. United Kingdom: Packt Publishing, Limited.
+
+Lee, T. (2021) Windows Server Automation with PowerShell Cookbook. 4th edn. Packt Publishing.
+
+Sukhija, V. (2021) PowerShell Fast Track: Hacks for Non-Coders. 1st edn. Berkeley, CA: Apress.
+
+Waters, I. (2021) PowerShell for Beginners: Learn PowerShell 7 Through Hands-On Mini Games. 1st edn. Berkeley, CA: Apress L. P.

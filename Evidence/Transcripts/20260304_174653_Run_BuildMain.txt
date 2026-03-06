@@ -1,0 +1,88 @@
+**********************
+PowerShell transcript start
+Start time: 20260304174653
+Username: BARMBUZZ\Administrator
+RunAs User: BARMBUZZ\Administrator
+Configuration Name: 
+Machine: BB-DC01 (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll
+Process ID: 10200
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+[+] Transcript started: Evidence\\Transcripts\\20260304_174653_Run_BuildMain.txt
+[+] Admin privileges confirmed.
+
+[Phase 1] Prerequisites...
+[*] Invoke-BarmBuzz-OneShots: LCM then Network
+[*] LCM already configured (flag present).
+[*] Network already configured (flag present).
+[*] LCM already configured (skipping).
+[*] Network already configured (skipping).
+[+] Phase 1 complete.
+
+[Phase 2] Compile + Apply DSC...
+[+] Found configuration: StudentBaseline
+[*] Compiling -> DSC\\Outputs\\StudentBaseline
+PS>TerminatingError(ActiveDirectoryDsc\ADDomain): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: At least one of the values 'Win2016Forest' is not supported or valid for property 'ForestMode' on class 'ADDomain'. Please specify only supported values:
+Win2008, Win2008R2, Win2012, Win2012R2, WinThreshold, Win2025."
+>> TerminatingError(ActiveDirectoryDsc\ADDomain): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: At least one of the values 'Win2016Forest' is not supported or valid for property 'ForestMode' on class 'ADDomain'. Please specify only supported values:
+Win2008, Win2008R2, Win2012, Win2012R2, WinThreshold, Win2025."
+Write-Error: C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:29
+Line |
+  29 |      Node 'BB-DC01' {   # Replace with your DC hostname
+     |      ~~~~
+     | At least one of the values 'Win2016Forest' is not supported or valid for property 'ForestMode' on class 'ADDomain'. Please specify only supported values: Win2008, Win2008R2, Win2012, Win2012R2, WinThreshold, Win2025.
+Write-Error: C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:29
+Line |
+  29 |      Node 'BB-DC01' {   # Replace with your DC hostname
+     |      ~~~~
+     | At least one of the values 'Win2016Forest' is not supported or valid for property 'ForestMode' on
+     | class 'ADDomain'. Please specify only supported values: Win2008, Win2008R2, Win2012, Win2012R2,
+     | WinThreshold, Win2025.
+
+PS>TerminatingError(Update-ModuleVersion): "Index operation failed; the array index evaluated to null."
+Write-Error: C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:29
+Line |
+  29 |      Node 'BB-DC01' {   # Replace with your DC hostname
+     |      ~~~~
+     | An exception was raised while processing Node 'BB-DC01': Index operation failed; the array index evaluated to null. At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:29 char:5 +   Node
+Write-Error: C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:29
+Line |
+  29 |      Node 'BB-DC01' {   # Replace with your DC hostname
+     |      ~~~~
+     | An exception was raised while processing Node 'BB-DC01': Index operation failed; the array index
+     | evaluated to null. At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:29 char:5 +   Node
+
+PS>TerminatingError(): "Converting and storing encrypted passwords as plain text is not recommended. For more information on securing credentials in MOF file, please refer to MSDN blog: http://go.microsoft.com/fwlink/?LinkId=393729"
+Write-Error: 
+Line |
+ 340 |      $aliasId = ConvertTo-MOFInstance $keywordName $canonicalizedValue
+     |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | System.InvalidOperationException error processing property 'Credential' OF TYPE 'Computer': Converting and storing encrypted passwords as plain text is not recommended. For more information on securing credentials in MOF file, please refer to MSDN blog: http://go.microsoft.com/fwlink/?LinkId=393729
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:114 char:9
++   Computer
+Write-Error: 
+Line |
+ 340 |      $aliasId = ConvertTo-MOFInstance $keywordName $canonicalizedValue
+     |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | System.InvalidOperationException error processing property 'Credential' OF TYPE 'Computer': Converting and storing encrypted passwords as plain text is not recommended. For more information on securing credentials in MOF file, please refer to MSDN blog: http://go.microsoft.com/fwlink/?LinkId=393729
+At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:114 char:9
++   Computer
+PS>TerminatingError(Update-DependsOn): "Index operation failed; the array index evaluated to null."
+PS>TerminatingError(Update-DependsOn): "Index operation failed; the array index evaluated to null."
+>> TerminatingError(Update-DependsOn): "Index operation failed; the array index evaluated to null."
+
+[-] BUILD FAILED
+Message: Index operation failed; the array index evaluated to null.
+**********************
+PowerShell transcript end
+End time: 20260304174725
+**********************

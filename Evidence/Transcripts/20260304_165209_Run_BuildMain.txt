@@ -1,0 +1,84 @@
+**********************
+PowerShell transcript start
+Start time: 20260304165209
+Username: BARMBUZZ\Administrator
+RunAs User: BARMBUZZ\Administrator
+Configuration Name: 
+Machine: BB-DC01 (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -WorkingDirectory ~
+Process ID: 2052
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+[+] Transcript started: Evidence\\Transcripts\\20260304_165209_Run_BuildMain.txt
+[+] Admin privileges confirmed.
+
+[Phase 1] Prerequisites...
+[*] Invoke-BarmBuzz-OneShots: LCM then Network
+[*] LCM already configured (flag present).
+[*] Network already configured (flag present).
+[*] LCM already configured (skipping).
+[*] Network already configured (skipping).
+[+] Phase 1 complete.
+
+[Phase 2] Compile + Apply DSC...
+[+] Found configuration: StudentBaseline
+[*] Compiling -> DSC\\Outputs\\StudentBaseline
+PS>TerminatingError(ActiveDirectoryDsc\ADDomain): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: At least one of the values 'Win2016' is not supported or valid for property 'ForestMode' on class 'ADDomain'. Please specify only supported values:
+Win2008, Win2008R2, Win2012, Win2012R2, WinThreshold, Win2025."
+>> TerminatingError(ActiveDirectoryDsc\ADDomain): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: At least one of the values 'Win2016' is not supported or valid for property 'ForestMode' on class 'ADDomain'. Please specify only supported values:
+Win2008, Win2008R2, Win2012, Win2012R2, WinThreshold, Win2025."
+Write-Error: C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:21
+Line |
+  21 |          Node $node.NodeName {
+     |          ~~~~
+     | At least one of the values 'Win2016' is not supported or valid for property 'ForestMode' on class 'ADDomain'. Please specify only supported values: Win2008, Win2008R2, Win2012, Win2012R2, WinThreshold, Win2025.
+Write-Error: C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:21
+Line |
+  21 |          Node $node.NodeName {
+     |          ~~~~
+     | At least one of the values 'Win2016' is not supported or valid for property 'ForestMode' on class
+     | 'ADDomain'. Please specify only supported values: Win2008, Win2008R2, Win2012, Win2012R2,
+     | WinThreshold, Win2025.
+
+PS>TerminatingError(Update-ModuleVersion): "Index operation failed; the array index evaluated to null."
+Write-Error: C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:21
+Line |
+  21 |          Node $node.NodeName {
+     |          ~~~~
+     | An exception was raised while processing Node 'localhost': Index operation failed; the array index evaluated to null. At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:21 char:9 +   Node
+Write-Error: C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:21
+Line |
+  21 |          Node $node.NodeName {
+     |          ~~~~
+     | An exception was raised while processing Node 'localhost': Index operation failed; the array index
+     | evaluated to null. At C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:21 char:9 +   Node
+
+PSDesiredStateConfiguration\node: C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:21
+Line |
+  21 |          Node $node.NodeName {
+     |          ~~~~
+     | The property 'InterfaceAlias_Internal' cannot be found on this object. Verify that the property exists.
+PSDesiredStateConfiguration\node: C:\Dev\repos\BarmBuzz\DSC\Configurations\StudentConfig.ps1:21
+Line |
+  21 |          Node $node.NodeName {
+     |          ~~~~
+     | The property 'InterfaceAlias_Internal' cannot be found on this object. Verify that the property exists.
+
+PS>TerminatingError(Update-DependsOn): "Index operation failed; the array index evaluated to null."
+PS>TerminatingError(Update-DependsOn): "Index operation failed; the array index evaluated to null."
+>> TerminatingError(Update-DependsOn): "Index operation failed; the array index evaluated to null."
+
+[-] BUILD FAILED
+Message: Index operation failed; the array index evaluated to null.
+**********************
+PowerShell transcript end
+End time: 20260304165245
+**********************

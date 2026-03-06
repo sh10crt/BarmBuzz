@@ -1,7 +1,3 @@
 # AI Usage Log (AI_LOG)
 
-Record any AI/tool usage:
-- date/time
-- tool used
-- what it generated
-- what you changed afterwards
+AI has been used in the development of this environment, Particulkarly for the debugging of code chat Gpt, Gemini etc has been very helpfull in debugging errors, Specially one I had with gpg such as verifying paths and making everything aligned so the excution is bbeing carried out effceintly.
